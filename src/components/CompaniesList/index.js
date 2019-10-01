@@ -15,7 +15,13 @@ const CompaniesList = () => (
       <button>Watchlist</button>
     </div>
     <div>
-      <h2>Companies list</h2>
+      <div className={styles.subHeader}>
+        <h2>Companies list</h2>
+        <div>
+          <button>List view</button>
+          <button>Add company</button>
+        </div>
+      </div>
       <div className={styles.companiesList}>
         {companies.map(({ name, id }) => (
           <div key={`${name}_${id}`} className={styles.companyCard}>
