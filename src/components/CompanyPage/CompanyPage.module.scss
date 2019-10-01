@@ -1,0 +1,9 @@
+.companyPage {
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+}
+
+.companyLogo {
+  max-width: 200px;
+  max-height: 75px;
+}
