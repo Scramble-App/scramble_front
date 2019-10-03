@@ -13,6 +13,15 @@ const CompaniesList = () => (
       </ul>
       <button>All</button>
       <button>Watchlist</button>
+      <div>
+        <h3>Other pages:</h3>
+        <div>
+          <Link to="/fundraising">Fundraising</Link>
+        </div>
+        <div>
+          <Link to="/requests">Requests</Link>
+        </div>
+      </div>
     </div>
     <div>
       <div className={styles.subHeader}>
@@ -23,7 +32,7 @@ const CompaniesList = () => (
         </div>
       </div>
       <div className={styles.companiesList}>
-        {companies.map(({ name, id }) => (
+        {companies.map(({name, id}) => (
           <div key={`${name}_${id}`} className={styles.companyCard}>
             <Link to={`/companies/${id}`}>
               {name}
