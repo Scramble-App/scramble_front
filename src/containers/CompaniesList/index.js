@@ -1,9 +1,14 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import styles from "./CompaniesList.module.scss";
-import companies from "../../mockups/companies";
+import {connect} from "react-redux";
 import {Link} from "react-router-dom";
 
-const CompaniesList = () => (
+const CompaniesList = ({dispatch, companies}) => {
+  useEffect(() => {
+    dispatch({type: 'FETCH_COMPANIES_REQUEST'})
+  }, []);
+
+  return (
   <div className={styles.wrapper}>
     <div>
       <h3>Filters</h3>
@@ -42,6 +47,10 @@ const CompaniesList = () => (
       </div>
     </div>
   </div>
-);
+)};
 
-export default CompaniesList;
+export default connect((state) => {
+  return {
+    companies: state.companies
+  }
+}, null)(CompaniesList);

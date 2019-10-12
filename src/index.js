@@ -3,8 +3,27 @@ import ReactDOM from 'react-dom';
 import './index.module.scss';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+import {Provider} from "react-redux";
+import store from "./redux/store";
+import axios from 'axios'
+import Cookies from 'js-cookie'
 
-ReactDOM.render(<App />, document.getElementById('root'));
+axios.interceptors.request.use(function (config) {
+  const token = Cookies.get('token')
+
+  if (token) {
+    config.headers.Authorization = `Token ${token}`
+  }
+
+  return config
+})
+
+
+ReactDOM.render(
+  <Provider store={store}>
+    <App />
+  </Provider>
+  , document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
