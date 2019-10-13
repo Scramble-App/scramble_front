@@ -1,6 +1,8 @@
 import {put, takeEvery, call, takeLatest} from "@redux-saga/core/effects";
 import axios from "axios";
 import Cookies from 'js-cookie'
+import history from '../../history'
+import {toast} from "react-toastify";
 
 function* fetchUser () {
   try {
@@ -15,31 +17,25 @@ function* signup ({ payload }) {
   try {
     payload.username = payload.email
     yield axios.post('http://127.0.0.1:8000/api/auth/users/', payload)
-    // TODO show notification and redirect to login page
+    yield call(login, { payload }, 'add-company')
   }
   catch (e) {
     // TODO show notification
   }
 }
 
-function* login ({ payload }) {
+function* login ({ payload }, redirectUrl = 'companies') {
   try {
     payload.username = payload.email
     const res = yield axios.post('http://127.0.0.1:8000/api/auth/token/login/', payload)
     Cookies.set('token', res.data.auth_token)
     yield call(fetchUser)
+    yield call(history.push, redirectUrl)
   }
   catch (e) {
-
-  }
-  finally {
-    // const response = {
-    //   user: {
-    //     id: 'someid'
-    //   }
-    // }
-    //
-    // yield put({type: 'LOGIN_SUCCESS', payload: response.user })
+    console.log('herer')
+    // TODO show notification
+    yield call(toast.error, 'Something went wrong')
   }
 }
 

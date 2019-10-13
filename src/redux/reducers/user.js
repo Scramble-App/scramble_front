@@ -1,4 +1,4 @@
-const userReducer = (state = {}, {type, payload} = {}) => {
+const userReducer = (state = {isLoading: true}, {type, payload} = {}) => {
   switch(type) {
     case 'FETCH_USER_REQUEST':
     case 'LOGIN_REQUEST':

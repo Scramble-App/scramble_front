@@ -7,8 +7,10 @@ import {Provider} from "react-redux";
 import store from "./redux/store";
 import axios from 'axios'
 import Cookies from 'js-cookie'
+import 'antd/es/date-picker/style/css';
+import 'react-toastify/dist/ReactToastify.css';
 
-axios.interceptors.request.use(function (config) {
+axios.interceptors.request.use(config => {
   const token = Cookies.get('token')
 
   if (token) {
@@ -17,6 +19,18 @@ axios.interceptors.request.use(function (config) {
 
   return config
 })
+
+axios.interceptors.request.use(config => {
+  // TODO add trailing slash
+  if (config.url.charAt(config.url.length - 1) !== '/') {
+    console.warn('Don`t forget about mandatory trailing slash!')
+  }
+
+  // if (config.url[config.url.length-1] !== '/') {
+  //   config.url += '/';
+  // }
+  return config;
+});
 
 
 ReactDOM.render(

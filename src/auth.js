@@ -13,7 +13,7 @@ const unauthorizedUserCriteria = {
 export const authOnly =
   connectedRouterRedirect({
     ...authorizedUserCriteria,
-    redirectPath: '/signup'
+    redirectPath: '/login'
   })
 
 export const unauthOnly =

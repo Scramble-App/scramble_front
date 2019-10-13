@@ -2,6 +2,7 @@ import React, {useEffect} from 'react'
 import styles from "./CompaniesList.module.scss";
 import {connect} from "react-redux";
 import {Link} from "react-router-dom";
+import {companiesListSelector} from "../../redux/selectors";
 
 const CompaniesList = ({dispatch, companies}) => {
   useEffect(() => {
@@ -9,6 +10,7 @@ const CompaniesList = ({dispatch, companies}) => {
   }, []);
 
   return (
+  //  TODO move to component view
   <div className={styles.wrapper}>
     <div>
       <h3>Filters</h3>
@@ -25,6 +27,9 @@ const CompaniesList = ({dispatch, companies}) => {
         </div>
         <div>
           <Link to="/requests">Requests</Link>
+        </div>
+        <div>
+          <Link to="/add-company">Add company</Link>
         </div>
       </div>
     </div>
@@ -49,8 +54,6 @@ const CompaniesList = ({dispatch, companies}) => {
   </div>
 )};
 
-export default connect((state) => {
-  return {
-    companies: state.companies
-  }
-}, null)(CompaniesList);
+export default connect(state => ({
+  companies: companiesListSelector(state),
+}), null)(CompaniesList);
