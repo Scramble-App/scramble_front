@@ -6,7 +6,7 @@ import {toast} from "react-toastify";
 
 function* fetchUser () {
   try {
-    const res = yield axios.get('http://127.0.0.1:8000/api/auth/users/me/')
+    const res = yield axios.get('auth/users/me/')
     yield put({type: 'FETCH_USER_SUCCESS', payload: res.data})
   } catch (e) {
     yield put({type: 'FETCH_USER_FAILURE'})
@@ -16,7 +16,7 @@ function* fetchUser () {
 function* signup ({ payload }) {
   try {
     payload.username = payload.email
-    yield axios.post('http://127.0.0.1:8000/api/auth/users/', payload)
+    yield axios.post('auth/users/', payload)
     yield call(login, { payload }, 'add-company')
   }
   catch (e) {
@@ -27,7 +27,7 @@ function* signup ({ payload }) {
 function* login ({ payload }, redirectUrl = 'companies') {
   try {
     payload.username = payload.email
-    const res = yield axios.post('http://127.0.0.1:8000/api/auth/token/login/', payload)
+    const res = yield axios.post('auth/token/login/', payload)
     Cookies.set('token', res.data.auth_token)
     yield call(fetchUser)
     yield call(history.push, redirectUrl)

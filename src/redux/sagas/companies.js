@@ -3,7 +3,7 @@ import axios from "axios";
 
 function* fetchCompaniesRequest() {
   try {
-    const res = yield axios.get('http://127.0.0.1:8000/api/company/')
+    const res = yield axios.get('company/')
 
     yield put({type: 'FETCH_COMPANIES_SUCCESS', payload: res.data})
   } catch (e) {
@@ -14,7 +14,7 @@ function* fetchCompaniesRequest() {
 
 function* addCompanyRequest(action) {
   try {
-    const res = yield axios.post('http://127.0.0.1:8000/api/company/', action.payload)
+    const res = yield axios.post('company/', action.payload)
     yield put({type: 'FETCH_ADD_COMPANIES_SUCCESS', payload: res.data})
   } catch (e) {
     //TODO
