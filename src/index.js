@@ -7,7 +7,7 @@ import {Provider} from "react-redux";
 import store from "./redux/store";
 import axios from 'axios'
 import Cookies from 'js-cookie'
-import 'antd/es/date-picker/style/css';
+import 'antd/dist/antd.css';
 import 'react-toastify/dist/ReactToastify.css';
 
 axios.defaults.baseURL = `${process.env.REACT_APP_API_HOST}/api/`;

@@ -10,6 +10,8 @@ import AddCompany from "./components/AddCompany";
 import {authOnly, unauthOnly} from "./auth";
 import Login from "./components/Login";
 import history from "./history"
+import {Layout} from "antd";
+import styles from './App.module.scss'
 
 function App({dispatch}) {
   useEffect((...props) => {
@@ -29,42 +31,52 @@ function App({dispatch}) {
   }
 
   return (
-    <Router history={history}>
-      <Switch>
-        <Route
-          path="/signup"
-          component={unauthOnly(props => <Signup onSignupFormSubmit={signup} {...props}/>)}
-        />
-        <Route
-          path="/login"
-          component={unauthOnly(props => <Login onLoginFormSubmit={login} {...props}/>)}
-        />
-        <Route
-          path="/companies"
-          exact
-          component={authOnly(CompaniesList)}
-        />
-        <Route
-          path="/companies/:id"
-          component={authOnly(CompanyPage)}
-        />
-        <Route
-          path="/fundraising"
-          component={authOnly(FundraisingPage)}
-        />
-        <Route
-          path="/requests"
-          component={authOnly(RequestsPage)}
-        />
-        <Route
-          path="/add-company"
-          component={authOnly(props => <AddCompany onAddCompanyFormSubmit={addCompany} {...props} />)}
-        />
-        <Redirect
-          to="/login"
-        />
-      </Switch>
-    </Router>
+    <Layout>
+      <Layout.Header>
+        <div className={styles.logo}>
+          Scramble
+        </div>
+      </Layout.Header>
+      <Layout.Content className={styles.content}>
+        <Router history={history}>
+          <Switch>
+            <Route
+              path="/signup"
+              component={unauthOnly(props => <Signup onSignupFormSubmit={signup} {...props}/>)}
+            />
+            <Route
+              path="/login"
+              component={unauthOnly(props => <Login onLoginFormSubmit={login} {...props}/>)}
+            />
+            <Route
+              path="/companies"
+              exact
+              component={authOnly(CompaniesList)}
+            />
+            <Route
+              path="/companies/:id"
+              component={authOnly(CompanyPage)}
+            />
+            <Route
+              path="/fundraising"
+              component={authOnly(FundraisingPage)}
+            />
+            <Route
+              path="/requests"
+              component={authOnly(RequestsPage)}
+            />
+            <Route
+              path="/add-company"
+              component={authOnly(props => <AddCompany onAddCompanyFormSubmit={addCompany} {...props} />)}
+            />
+            <Redirect
+              to="/login"
+            />
+          </Switch>
+        </Router>
+      </Layout.Content>
+    </Layout>
+
   );
 }
 

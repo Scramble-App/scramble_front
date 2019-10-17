@@ -28,9 +28,6 @@ const CompaniesList = ({dispatch, companies}) => {
         <div>
           <Link to="/requests">Requests</Link>
         </div>
-        <div>
-          <Link to="/add-company">Add company</Link>
-        </div>
       </div>
     </div>
     <div>
@@ -38,7 +35,6 @@ const CompaniesList = ({dispatch, companies}) => {
         <h2>Companies list</h2>
         <div>
           <button>List view</button>
-          <button>Add company</button>
         </div>
       </div>
       <div className={styles.companiesList}>

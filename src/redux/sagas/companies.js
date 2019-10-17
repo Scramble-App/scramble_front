@@ -1,5 +1,6 @@
-import {put, takeEvery} from "@redux-saga/core/effects";
+import {call, put, takeEvery} from "@redux-saga/core/effects";
 import axios from "axios";
+import history from "../../history";
 
 function* fetchCompaniesRequest() {
   try {
@@ -16,6 +17,7 @@ function* addCompanyRequest(action) {
   try {
     const res = yield axios.post('company/', action.payload)
     yield put({type: 'FETCH_ADD_COMPANIES_SUCCESS', payload: res.data})
+    yield call(history.push, '/companies')
   } catch (e) {
     //TODO
     // yield put({type: 'FETCH_COMPANIES_FAILURE'})

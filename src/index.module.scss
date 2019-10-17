@@ -5,9 +5,5 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
-
-:global(#root) {
-  width: 60%;
-  margin: 0 auto;
+  background-color: #f0f2f5 !important;
 }
