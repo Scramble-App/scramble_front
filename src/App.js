@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {Redirect, Route, Router, Switch} from "react-router-dom";
+import {Link, Redirect, Route, Router, Switch} from "react-router-dom";
 import CompaniesList from "./containers/CompaniesList";
 import CompanyPage from "./containers/CompanyPage";
 import FundraisingPage from "./components/FundraisingPage";
@@ -9,8 +9,9 @@ import Signup from "./components/Signup";
 import AddCompany from "./components/AddCompany";
 import {authOnly, unauthOnly} from "./auth";
 import Login from "./components/Login";
+import Account from "./containers/Account";
 import history from "./history"
-import {Layout} from "antd";
+import {Layout, Menu} from "antd";
 import styles from './App.module.scss'
 
 function App({dispatch}) {
@@ -30,15 +31,34 @@ function App({dispatch}) {
     dispatch({type: 'ADD_COMPANY_REQUEST', payload: values})
   }
 
+
   return (
-    <Layout>
-      <Layout.Header>
-        <div className={styles.logo}>
-          Scramble
-        </div>
-      </Layout.Header>
-      <Layout.Content className={styles.content}>
-        <Router history={history}>
+    <Router history={history}>
+      <Layout>
+        <Layout.Header>
+          <div className={styles.logo}>
+            <Link to="/">
+              Scramble
+            </Link>
+          </div>
+          <Menu
+            mode="horizontal"
+            theme="dark"
+            style={{ lineHeight: '64px' }}
+          >
+            <Menu.Item key={1}>
+              <Link to="/companies">Companies</Link>
+            </Menu.Item>
+            <Menu.Item key={2}>
+              <Link to="/my-company">My Company</Link>
+            </Menu.Item>
+
+            <Menu.Item key={3}>
+              <Link to="/account">My Account</Link>
+            </Menu.Item>
+          </Menu>
+        </Layout.Header>
+        <Layout.Content className={styles.content}>
           <Switch>
             <Route
               path="/signup"
@@ -69,14 +89,17 @@ function App({dispatch}) {
               path="/add-company"
               component={authOnly(props => <AddCompany onAddCompanyFormSubmit={addCompany} {...props} />)}
             />
+            <Route
+              path="/account"
+              component={authOnly(Account)}
+            />
             <Redirect
               to="/login"
             />
           </Switch>
-        </Router>
-      </Layout.Content>
-    </Layout>
-
+        </Layout.Content>
+      </Layout>
+    </Router>
   );
 }
 

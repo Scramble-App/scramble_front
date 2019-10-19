@@ -33,7 +33,6 @@ function* login ({ payload }, redirectUrl = 'companies') {
     yield call(history.push, redirectUrl)
   }
   catch (e) {
-    console.log('herer')
     // TODO show notification
     yield call(toast.error, 'Something went wrong')
   }
