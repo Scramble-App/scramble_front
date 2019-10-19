@@ -18,6 +18,12 @@ const Signup = ({onSignupFormSubmit}) => (
             <CustomFormField type="password" name="password" placeholder="Password" icon="lock"/>
           </Form.Item>
           <Form.Item>
+            <CustomFormField type="text" name="first_name" placeholder="First Name"/>
+          </Form.Item>
+          <Form.Item>
+            <CustomFormField type="text" name="last_name" placeholder="Last Name"/>
+          </Form.Item>
+          <Form.Item>
             <Button type="primary" htmlType="submit">
               Sign up
             </Button>

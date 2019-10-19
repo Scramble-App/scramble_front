@@ -1,7 +1,7 @@
-import {put, takeEvery, call, takeLatest} from "@redux-saga/core/effects";
 import axios from "axios";
-import Cookies from 'js-cookie'
-import history from '../../history'
+import {call, put, takeEvery, takeLatest} from "@redux-saga/core/effects";
+import Cookies from "js-cookie";
+import history from "../../history";
 import {toast} from "react-toastify";
 
 function* fetchUser () {
@@ -38,6 +38,18 @@ function* login ({ payload }, redirectUrl = 'companies') {
   }
 }
 
+function* logout() {
+  try {
+    yield axios.post('auth/token/logout/')
+    Cookies.remove('token')
+    yield put({ type: 'LOGOUT_SUCCESS'})
+  }
+  catch (e) {
+    yield put({ type: 'LOGOUT_FAILURE'})
+    // TODO show notification
+  }
+}
+
 export function* watchFetchUserRequest () {
   yield takeEvery('FETCH_USER_REQUEST', fetchUser)
 }
@@ -48,4 +60,8 @@ export function* watchSignupRequest() {
 
 export function* watchLoginRequest() {
   yield takeLatest('LOGIN_REQUEST', login)
+}
+
+export function* watchLogout() {
+  yield takeLatest('LOGOUT_REQUEST', logout)
 }

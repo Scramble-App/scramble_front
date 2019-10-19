@@ -1,42 +1,23 @@
 import React from "react";
 import {connect} from "react-redux";
-import {Field, Form as FinalForm} from "react-final-form";
-import {currentUserSelector} from "../../redux/selectors";
+import {Button, Col, Row} from "antd";
+import {currentUserSelector} from "../../ducks/users/selectors";
 
-const Account = ({ user }) => (
-  <div>
-    <div>
+const Account = ({ user, dispatch }) => (
+  <Row>
+    <Col span={12} offset={4}>
       <p>Email: {user.email}</p>
-      <p>Full name: {user.fullname}</p>
-    </div>
-    <div>
-      Company info
-    </div>
-    <div>
-      Stats
-    </div>
-    <div>
-      Fundraising
-    </div>
-    <div>
-      Income requests
-    </div>
-    <div>
-      Notifications
-    </div>
-    <div>
-      Total guarantees
-    </div>
-    <div>
-      Log out
-    </div>
-  </div>
+      <p>Full name: {user.first_name} {user.last_name}</p>
+      <Button onClick={() => dispatch({type: 'LOGOUT_REQUEST'})}>Log out</Button>
+    </Col>
+  </Row>
 );
 
 export default connect(
-  (state) => ({
+  state => ({
     user: currentUserSelector(state)
-  })
+  }),
+  null
 )(Account)
 
 

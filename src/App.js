@@ -3,21 +3,24 @@ import {Link, Redirect, Route, Router, Switch} from "react-router-dom";
 import CompaniesList from "./containers/CompaniesList";
 import CompanyPage from "./containers/CompanyPage";
 import FundraisingPage from "./components/FundraisingPage";
-import RequestsPage from "./components/RequestsPage";
+import RequestsPage from "./containers/RequestsPage";
 import {connect} from "react-redux";
 import Signup from "./components/Signup";
 import AddCompany from "./components/AddCompany";
 import {authOnly, unauthOnly} from "./auth";
 import Login from "./components/Login";
 import Account from "./containers/Account";
+import MyCompany from "./containers/MyCompany";
 import history from "./history"
-import {Layout, Menu} from "antd";
+import {Col, Layout, Row} from "antd";
 import styles from './App.module.scss'
+import HeaderMenu from "./components/HeaderMenu";
+import {currentUserSelector} from "./ducks/users/selectors";
 
-function App({dispatch}) {
+function App({dispatch, user}) {
   useEffect((...props) => {
     dispatch({type: 'FETCH_USER_REQUEST'})
-  })
+  }, [])
 
   const signup = (values) => {
     dispatch({type: 'SIGNUP_REQUEST', payload: values})
@@ -35,30 +38,22 @@ function App({dispatch}) {
   return (
     <Router history={history}>
       <Layout>
-        <Layout.Header>
-          <div className={styles.logo}>
-            <Link to="/">
-              Scramble
-            </Link>
-          </div>
-          <Menu
-            mode="horizontal"
-            theme="dark"
-            style={{ lineHeight: '64px' }}
-          >
-            <Menu.Item key={1}>
-              <Link to="/companies">Companies</Link>
-            </Menu.Item>
-            <Menu.Item key={2}>
-              <Link to="/my-company">My Company</Link>
-            </Menu.Item>
+        <Layout.Header className={styles.header}>
+          <Row>
+            <Col span={4} offset={4}>
+              <div className={styles.logo}>
+                <Link to="/">
+                  Scramble
+                </Link>
+              </div>
+            </Col>
+            <Col span={10} push={2}>
+              {user.id && <HeaderMenu />}
+            </Col>
+          </Row>
 
-            <Menu.Item key={3}>
-              <Link to="/account">My Account</Link>
-            </Menu.Item>
-          </Menu>
         </Layout.Header>
-        <Layout.Content className={styles.content}>
+        <Layout.Content>
           <Switch>
             <Route
               path="/signup"
@@ -93,6 +88,10 @@ function App({dispatch}) {
               path="/account"
               component={authOnly(Account)}
             />
+            <Route
+              path="/my-company"
+              component={authOnly(MyCompany)}
+            />
             <Redirect
               to="/login"
             />
@@ -103,4 +102,6 @@ function App({dispatch}) {
   );
 }
 
-export default connect(null, null)(App);
+export default connect((state) => ({
+  user: currentUserSelector(state),
+}), null)(App);

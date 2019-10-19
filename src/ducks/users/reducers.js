@@ -1,4 +1,4 @@
-const userReducer = (state = {isLoading: true}, {type, payload} = {}) => {
+export default function userReducer (state = {isLoading: true}, {type, payload} = {}) {
   switch(type) {
     case 'FETCH_USER_REQUEST':
     case 'LOGIN_REQUEST':
@@ -15,10 +15,12 @@ const userReducer = (state = {isLoading: true}, {type, payload} = {}) => {
     case 'SIGNUP_FAILURE':
       return {...state, isLoading: false}
 
+    case 'LOGOUT_SUCCESS':
+      return {isLoading: false}
+
     default:
       return state
 
   }
 }
 
-export default userReducer

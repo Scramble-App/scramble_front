@@ -1,5 +1,5 @@
-import {call, put, takeEvery} from "@redux-saga/core/effects";
 import axios from "axios";
+import {call, put, takeEvery} from "@redux-saga/core/effects";
 import history from "../../history";
 
 function* fetchCompaniesRequest() {
@@ -22,7 +22,6 @@ function* addCompanyRequest(action) {
     //TODO
     // yield put({type: 'FETCH_COMPANIES_FAILURE'})
   }
-
 }
 export function* watchAddCompanyRequest()  {
   yield takeEvery('ADD_COMPANY_REQUEST', addCompanyRequest)
