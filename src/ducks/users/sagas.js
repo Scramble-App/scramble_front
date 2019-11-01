@@ -2,7 +2,7 @@ import axios from "axios";
 import {call, put, takeEvery, takeLatest} from "@redux-saga/core/effects";
 import Cookies from "js-cookie";
 import history from "../../history";
-import {toast} from "react-toastify";
+import {notification} from "antd";
 
 function* fetchUser () {
   try {
@@ -20,7 +20,7 @@ function* signup ({ payload }) {
     yield call(login, { payload }, 'add-company')
   }
   catch (e) {
-    // TODO show notification
+    notification.error({message: 'Something went wrong. Please try again!'})
   }
 }
 
@@ -29,12 +29,13 @@ function* login ({ payload }, redirectUrl = 'companies') {
     payload.username = payload.email
     const res = yield axios.post('auth/token/login/', payload)
     Cookies.set('token', res.data.auth_token)
+    yield put({type: 'LOGIN_SUCCESS'})
     yield call(fetchUser)
     yield call(history.push, redirectUrl)
   }
   catch (e) {
-    // TODO show notification
-    yield call(toast.error, 'Something went wrong')
+    yield put({type: 'LOGIN_FAILURE'})
+    notification.error({message: 'Something went wrong. Please try again!'})
   }
 }
 
@@ -46,7 +47,7 @@ function* logout() {
   }
   catch (e) {
     yield put({ type: 'LOGOUT_FAILURE'})
-    // TODO show notification
+    notification.error({message: 'Something went wrong. Please try again!'})
   }
 }
 

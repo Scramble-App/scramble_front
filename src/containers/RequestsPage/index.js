@@ -2,7 +2,7 @@ import React, {useEffect} from 'react'
 import {Link} from "react-router-dom";
 import {connect} from "react-redux";
 import {incomeRequestsSelector, outcomeRequestsSelector} from "../../ducks/requests/selectors";
-import {Col, Divider, Row, Table} from "antd";
+import {Button, Col, Divider, Row, Table} from "antd";
 
 const RequestsPage = ({outcomeRequests, incomeRequests, dispatch}) => {
   useEffect((...props) => {
@@ -23,7 +23,12 @@ const RequestsPage = ({outcomeRequests, incomeRequests, dispatch}) => {
         <h2>Outcome:</h2>
         <Table
           columns={[
-            {title: 'Target', dataIndex: 'target', key: 'target', render: target => <Link to={`/companies/${target.id}`}>{target.name}</Link>},
+            {
+              title: 'Target',
+              dataIndex: 'target',
+              key: 'target',
+              render: target => <Link to={`/companies/${target.id}`}>{target.name}</Link>
+            },
             {title: 'Type', dataIndex: 'type', key: 'type'},
             {title: 'Date', dataIndex: 'date', key: 'date'},
             {title: 'Status', dataIndex: 'status', key: 'status'}
@@ -34,7 +39,12 @@ const RequestsPage = ({outcomeRequests, incomeRequests, dispatch}) => {
         <h2>Income:</h2>
         <Table
           columns={[
-            {title: 'Sender', dataIndex: 'sender', key: 'sender', render: sender => <Link to={`/companies/${sender.id}`}>{sender.name}</Link>},
+            {
+              title: 'Sender',
+              dataIndex: 'sender',
+              key: 'sender',
+              render: sender => <Link to={`/companies/${sender.id}`}>{sender.name}</Link>
+            },
             {title: 'Type', dataIndex: 'type', key: 'type'},
             {title: 'Date', dataIndex: 'date', key: 'date'},
             {title: 'Status', dataIndex: 'status', key: 'status'},
@@ -42,13 +52,25 @@ const RequestsPage = ({outcomeRequests, incomeRequests, dispatch}) => {
             {
               title: 'Action',
               key: 'action',
-              render: (text, record) => (
-                <span>
-                  <a>Accept</a>
-                  <Divider type="vertical" />
-                  <a>Decline</a>
-                </span>
-              ),
+              render: (text, record) => {
+                return (
+                  <>
+                    {
+                      record.status === 'pending'
+                        ?
+                        <span>
+                          <Button onClick={() => dispatch({type: 'UPDATE_WATCHLIST_REQUEST', payload: {status: 'accepted', id: record.id} })} >Accept</Button>
+                          <Divider type="vertical"/>
+                          <Button onClick={() => dispatch({type: 'UPDATE_WATCHLIST_REQUEST', payload: {status: 'declined', id: record.id} })}>Decline</Button>
+                        </span>
+                        :
+                        ''
+                    }
+                  </>
+
+                )
+
+              },
             },
           ]}
           dataSource={incomeRequests}

@@ -3,11 +3,13 @@ import styles from './CompanyPage.module.scss'
 import {connect} from "react-redux";
 import {Button, Col, Row} from "antd";
 import {matchedCompanySelector, ownCompanySelector} from "../../ducks/companies/selectors";
+import {matchedOutcomeRequestSelector} from "../../ducks/requests/selectors";
 
-const CompanyPage = ({company, ownCompany, dispatch}) => {
+const CompanyPage = ({company, ownCompany, dispatch, outcomeRequest}) => {
   useEffect(() => {
     // TODO fetch company by id
     dispatch({type: 'FETCH_COMPANIES_REQUEST'})
+    dispatch({type: 'GET_WATCHLISTS_REQUEST'})
   }, []);
 
   const sendWatchlistRequest = async () => {
@@ -53,8 +55,10 @@ const CompanyPage = ({company, ownCompany, dispatch}) => {
         />
         }
         <div>
-          <Button onClick={sendWatchlistRequest}>Add to watchlist</Button>
-          <Button>Swap request</Button>
+          {!outcomeRequest &&
+            <Button onClick={sendWatchlistRequest}>Add to watchlist</Button>
+          }
+          {/*<Button>Swap request</Button>*/}
         </div>
       </Col>
     </Row>
@@ -64,7 +68,8 @@ const CompanyPage = ({company, ownCompany, dispatch}) => {
 export default connect(
   (state, props) => ({
     company: matchedCompanySelector(state, props),
-    ownCompany: ownCompanySelector(state)
+    ownCompany: ownCompanySelector(state),
+    outcomeRequest: matchedOutcomeRequestSelector(state, props)
   }),
   null
 )(CompanyPage)

@@ -1,5 +1,6 @@
 import {createSelector} from "reselect";
 import {companiesListSelector, ownCompanySelector} from "../companies/selectors";
+import {propsSelector} from "../index";
 
 export const requestsSelector = state => state.requests
 export const outcomeRequestsSelector = createSelector(
@@ -25,4 +26,9 @@ export const incomeRequestsSelector = createSelector(
         sender: companies.find(company => company.id === request.sender),
         target: companies.find(company => company.id === request.target)
       }))
+)
+
+export const matchedOutcomeRequestSelector = createSelector(
+  [outcomeRequestsSelector, propsSelector],
+  (requests, { match }) => requests.find(request => request.target.id === parseInt(match.params.id))
 )

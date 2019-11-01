@@ -20,6 +20,7 @@ import {currentUserSelector} from "./ducks/users/selectors";
 function App({dispatch, user}) {
   useEffect((...props) => {
     dispatch({type: 'FETCH_USER_REQUEST'})
+    dispatch({type: 'FETCH_WATCHLIST_REQUESTS_REQUEST'})
   }, [])
 
   const signup = (values) => {

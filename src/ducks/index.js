@@ -5,7 +5,7 @@ import user from './users/reducers'
 import companies from "./companies/reducers";
 import requests from './requests/reducers'
 import {watchAddCompanyRequest, watchFetchCompaniesRequest} from "./companies/sagas";
-import {watchGetWatchlistRequestsList, watchSendWatchlistRequest} from "./requests/sagas";
+import {watchGetWatchlistRequestsList, watchSendWatchlistRequest, watchUpdateWatchlistStatus} from "./requests/sagas";
 
 export const propsSelector = (state, props) => props
 
@@ -19,6 +19,7 @@ export function* rootSaga() {
     watchLogout(),
     watchSendWatchlistRequest(),
     watchGetWatchlistRequestsList(),
+    watchUpdateWatchlistStatus()
   ])
 }
 
