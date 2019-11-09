@@ -5,6 +5,7 @@ import {Link} from "react-router-dom";
 
 const FundraisingPage = () => {
   return (
+
     <div className={styles.fundraisingPage}>
       <div>
         <h3>Months:</h3>

@@ -7,7 +7,7 @@ import RequestsPage from "./containers/RequestsPage";
 import {connect} from "react-redux";
 import Signup from "./components/Signup";
 import AddCompany from "./components/AddCompany";
-import {authOnly, unauthOnly} from "./auth";
+import {authOnly, unauthOnly, withCompany, withoutCompany} from "./auth";
 import Login from "./components/Login";
 import Account from "./containers/Account";
 import MyCompany from "./containers/MyCompany";
@@ -35,6 +35,9 @@ function App({dispatch, user}) {
     dispatch({type: 'ADD_COMPANY_REQUEST', payload: values})
   }
 
+  const myCompany = (values) =>  {
+    dispatch({type: 'ADD_UPDATE_REQUEST', payload: values})
+  }
 
   return (
     <Router history={history}>
@@ -67,23 +70,23 @@ function App({dispatch, user}) {
             <Route
               path="/companies"
               exact
-              component={authOnly(CompaniesList)}
+              component={authOnly(withCompany(CompaniesList))}
             />
             <Route
-              path="/companies/:id"
-              component={authOnly(CompanyPage)}
+              path="/companies/:companyId"
+              component={authOnly(withCompany(CompanyPage))}
             />
             <Route
               path="/fundraising"
-              component={authOnly(FundraisingPage)}
+              component={authOnly(withCompany(FundraisingPage))}
             />
             <Route
               path="/requests"
-              component={authOnly(RequestsPage)}
+              component={authOnly(withCompany(RequestsPage))}
             />
             <Route
               path="/add-company"
-              component={authOnly(props => <AddCompany onAddCompanyFormSubmit={addCompany} {...props} />)}
+              component={authOnly(withoutCompany(props => <AddCompany onAddCompanyFormSubmit={addCompany} {...props} />))}
             />
             <Route
               path="/account"
@@ -91,7 +94,7 @@ function App({dispatch, user}) {
             />
             <Route
               path="/my-company"
-              component={authOnly(MyCompany)}
+              component={authOnly(withCompany(props => <MyCompany onMyCompanyFormSubmit={myCompany} {...props}/>)) }
             />
             <Redirect
               to="/login"

@@ -1,15 +1,15 @@
 import React, {useEffect} from 'react'
 import styles from './CompanyPage.module.scss'
 import {connect} from "react-redux";
-import {Button, Col, Row} from "antd";
+import {Button, Col, Row, Table} from "antd";
 import {matchedCompanySelector, ownCompanySelector} from "../../ducks/companies/selectors";
 import {matchedOutcomeRequestSelector} from "../../ducks/requests/selectors";
 
-const CompanyPage = ({company, ownCompany, dispatch, outcomeRequest}) => {
+const CompanyPage = ({company, ownCompany, dispatch, outcomeRequest, match}) => {
   useEffect(() => {
-    // TODO fetch company by id
-    dispatch({type: 'FETCH_COMPANIES_REQUEST'})
     dispatch({type: 'GET_WATCHLISTS_REQUEST'})
+    dispatch({type: 'FETCH_COMPANY_REQUEST', payload: {companyId: match.params.companyId}})
+    console.log(match)
   }, []);
 
   const sendWatchlistRequest = async () => {
@@ -28,25 +28,36 @@ const CompanyPage = ({company, ownCompany, dispatch, outcomeRequest}) => {
 
   return (
     <Row className={styles.companyPage}>
-      <Col offset={4} span={8}>
+      <Col offset={4} span={14}>
         <h2>{company.name}</h2>
         {company.description && <p>{company.description}</p>}
         <div>
           {company.updates && company.updates.length &&
           <>
-            <p>Monthly updates:</p>
-            <ul>
-              {company.updates.map(({date, uploadDate}) => (
-                <li key={`${date}_${uploadDate}`}>
-                  {(new Date(date)).toDateString()} (uploaded {(new Date(uploadDate)).toDateString()})}
-                </li>
-              ))}
-            </ul>
+            <h4>Monthly updates:</h4>
+            <Table
+              pagination={false}
+              size="middle"
+              columns={[
+                {
+                  title: "Update",
+                  dataIndex: 'text',
+                  key: 'text'
+                },
+                {
+                  title: "Date",
+                  dataIndex: 'created_at',
+                  key: "created_at",
+                  render: text => <p className={styles.datetime}>{(new Date(text)).toDateString()}</p>
+                }
+              ]}
+              dataSource={company.updates}
+            />
           </>
           }
         </div>
       </Col>
-      <Col span={4}>
+      <Col span={2}>
         {company.logo_url &&
         <img
           className={styles.companyLogo}

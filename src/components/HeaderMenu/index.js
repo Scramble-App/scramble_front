@@ -25,6 +25,9 @@ const HeaderMenu = ({ location }) => (
       <Menu.Item key="/account">
         <Link to="/account">My Account</Link>
       </Menu.Item>
+      <Menu.Item key="/fundraising">
+        <Link to="/fundraising">Fundraising</Link>
+      </Menu.Item>
       <Menu.Item key={4}>
         <Badge count={1} dot>
           <Icon type="notification" />
