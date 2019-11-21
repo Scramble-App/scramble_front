@@ -1,6 +1,7 @@
 import React, {useEffect} from "react";
-import {Button, Col, Collapse, Form, Row, Tabs} from "antd";
+import {Button, Col, Collapse, Form, Row, Table, Tabs} from "antd";
 import {Link} from "react-router-dom";
+import style from "./MyCompany.module.scss"
 import {Field, Form as FinalForm} from "react-final-form";
 import {connect} from "react-redux";
 import {ownCompanySelector} from "../../ducks/companies/selectors";
@@ -34,7 +35,9 @@ const MyCompany = ({company, dispatch, updates, onMyCompanyFormSubmit}) => {
                   <Form onSubmit={handleSubmit}>
                     <Field
                       name="text"
-                      component="textarea">
+                      component="textarea"
+                      className={style.textarea}
+                    >
                     </Field>
                     <br/>
                     <Button type="primary"
@@ -44,19 +47,23 @@ const MyCompany = ({company, dispatch, updates, onMyCompanyFormSubmit}) => {
               />
             </div>
             <br/>
-
-
             <h2>Your company's updates</h2>
-            <div>
-              {
-                updates.map(el => (
-                  <div key={el.id}>
-                    <p>{(new Date(el.created_at)).toDateString()}</p>
-                    <p>{el.text}</p>
-                  </div>
-                ))
-              }
-            </div>
+            <Table
+              columns={[
+                {
+                  title: 'Update',
+                  dataIndex: 'text',
+                  key: 'update'
+                },
+                {
+                  title: 'Date',
+                  dataIndex: 'created_at',
+                  key: 'date',
+                  render: text => <span>{(new Date(text)).toDateString()}</span>
+                }
+              ]}
+              dataSource={updates}
+            />
           </Tabs.TabPane>
         </Tabs>
       </Col>

@@ -70,7 +70,9 @@ const CompanyPage = ({company, ownCompany, dispatch, outcomeRequest, match}) => 
             <Button onClick={sendWatchlistRequest}>Add to watchlist</Button>
           }
           {/*<Button>Swap request</Button>*/}
+          <Button onClick={() => dispatch({type: "ADD_SWAP_REQUEST", payload: {target: parseInt(match.params.companyId, 10)}})}>Send swap</Button>
         </div>
+
       </Col>
     </Row>
   )

@@ -16,6 +16,7 @@ import {Col, Layout, Row} from "antd";
 import styles from './App.module.scss'
 import HeaderMenu from "./components/HeaderMenu";
 import {currentUserSelector} from "./ducks/users/selectors";
+import Logo from "./components/Logo";
 
 function App({dispatch, user}) {
   useEffect((...props) => {
@@ -47,7 +48,7 @@ function App({dispatch, user}) {
             <Col span={4} offset={4}>
               <div className={styles.logo}>
                 <Link to="/">
-                  Scramble
+                  <Logo />
                 </Link>
               </div>
             </Col>

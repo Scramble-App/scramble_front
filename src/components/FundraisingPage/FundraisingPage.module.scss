@@ -2,3 +2,32 @@
   display: grid;
   grid-template-columns: 1fr 3fr;
 }
+.fundraisingPageWrapper {
+  background-color: white;
+  padding: 20px 40px 40px 40px;
+  text-align: center;
+  h2 {
+    //margin-bottom: 30px;
+  }
+}
+.totalAmountHeader {
+  span {
+    font-size: 21px;
+    margin-left: 7px;
+  }
+}
+.progressBarWrapper {
+  margin-top: 20px;
+}
+.totalAmount {
+  font-size: 25px;
+}
+.swapsHeader {
+  margin-top: 60px;
+}
+.swapsWrapper {
+  display: flex;
+  justify-content: space-evenly;
+}
+.raisedAmountText {
+}

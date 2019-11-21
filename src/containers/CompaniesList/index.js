@@ -17,59 +17,59 @@ const CompaniesList = ({dispatch, companies}) => {
         <Tabs>
           <Tabs.TabPane tab="Search" key={1}>
             <div className={styles.tabContentWrapper}>
-            <Row gutter={32}>
-              <Col span={8}>
-                <h3>Filters</h3>
-                <Select
-                  mode="multiple"
-                  style={{width: '200px'}}
-                  placeholder="Industry"
-                >
-                  <Select.Option key={1}>Aerospace</Select.Option>
-                  <Select.Option key={2}>Transport</Select.Option>
-                  <Select.Option key={3}>Computer</Select.Option>
-                </Select>
-                <div className={styles.filterSliderWrapper}>
-                  <p>Annual Turnover</p>
-                  <Slider
-                    range
-                    step={10}
-                    defaultValue={[20, 50]}
-                  />
-                  <p>Company age</p>
-                  <Slider
-                    range
-                    step={1}
-                    defaultValue={[1, 10]}
-                    max={10}
-                  />
-                  <p>Employees number</p>
-                  <Slider
-                    range
-                    step={10}
-                    defaultValue={[1, 200]}
-                    max={1000}
-                  />
-                  <Button type="default" className={styles.leftButton}> All</Button>
-                  <Button type="default">Watchlist</Button>
-                </div>
-              </Col>
-              <Col span={16}>
-                <div className={styles.subHeader}>
-                  <h2>Companies list</h2>
-                </div>
-                <div className={styles.companiesList}>
-                  {companies.map(({name, id, founder}) => (
-                    <Card key={`${name}_${id}`} className={styles.companyCard}>
-                      <Link to={`/companies/${id}`}>
-                        {name}
-                      </Link>
-                      {founder.trim().length > 0 && <p className={styles.founder}>Founder: {founder}</p>}
-                    </Card>
-                  ))}
-                </div>
-              </Col>
-            </Row>
+              <Row gutter={32}>
+                <Col span={8}>
+                  <h3>Filters</h3>
+                  <Select
+                    mode="multiple"
+                    style={{width: '200px'}}
+                    placeholder="Industry"
+                  >
+                    <Select.Option key={1}>Aerospace</Select.Option>
+                    <Select.Option key={2}>Transport</Select.Option>
+                    <Select.Option key={3}>Computer</Select.Option>
+                  </Select>
+                  <div className={styles.filterSliderWrapper}>
+                    <p>Annual Turnover</p>
+                    <Slider
+                      range
+                      step={10}
+                      defaultValue={[20, 50]}
+                    />
+                    <p>Company age</p>
+                    <Slider
+                      range
+                      step={1}
+                      defaultValue={[1, 10]}
+                      max={10}
+                    />
+                    <p>Employees number</p>
+                    <Slider
+                      range
+                      step={10}
+                      defaultValue={[1, 200]}
+                      max={1000}
+                    />
+                    <Button type="default" className={styles.leftButton}> All</Button>
+                    <Button type="default">Watchlist</Button>
+                  </div>
+                </Col>
+                <Col span={16}>
+                  <div className={styles.subHeader}>
+                    <h2>Companies list</h2>
+                  </div>
+                  <div className={styles.companiesList}>
+                    {companies.map(({name, id, founder}) => (
+                      <Card key={`${name}_${id}`} className={styles.companyCard}>
+                        <Link to={`/companies/${id}`}>
+                          {name}
+                        </Link>
+                        {founder.trim().length > 0 && <p className={styles.founder}>Founder: {founder}</p>}
+                      </Card>
+                    ))}
+                  </div>
+                </Col>
+              </Row>
             </div>
           </Tabs.TabPane>
           <Tabs.TabPane tab="Power BI" key={2}>
