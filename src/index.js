@@ -10,7 +10,7 @@ import Cookies from 'js-cookie'
 import 'antd/dist/antd.css';
 import 'react-toastify/dist/ReactToastify.css';
 
-axios.defaults.baseURL = `${process.env.REACT_APP_API_HOST}/api/`;
+axios.defaults.baseURL = `/api/`;
 axios.interceptors.request.use(config => {
   const token = Cookies.get('token')
 
