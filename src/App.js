@@ -36,7 +36,7 @@ function App({dispatch, user}) {
     dispatch({type: 'ADD_COMPANY_REQUEST', payload: values})
   }
 
-  const myCompany = (values) =>  {
+  const myCompany = (values) => {
     dispatch({type: 'ADD_UPDATE_REQUEST', payload: values})
   }
 
@@ -44,20 +44,20 @@ function App({dispatch, user}) {
     <Router history={history}>
       <Layout>
         <Layout.Header className={styles.header}>
-          <Row>
+          <Row type="flex" align="middle">
             <Col span={4} offset={4}>
               <div className={styles.logo}>
                 <Link to="/">
-                  <Logo />
+                  <Logo/>
                 </Link>
               </div>
             </Col>
             <Col span={10} push={2}>
-              {user.id && <HeaderMenu />}
+              {user.id && <HeaderMenu/>}
             </Col>
           </Row>
-
         </Layout.Header>
+
         <Layout.Content>
           <Switch>
             <Route
@@ -87,7 +87,8 @@ function App({dispatch, user}) {
             />
             <Route
               path="/add-company"
-              component={authOnly(withoutCompany(props => <AddCompany onAddCompanyFormSubmit={addCompany} {...props} />))}
+              component={authOnly(withoutCompany(props => <AddCompany
+                onAddCompanyFormSubmit={addCompany} {...props} />))}
             />
             <Route
               path="/account"
@@ -95,7 +96,7 @@ function App({dispatch, user}) {
             />
             <Route
               path="/my-company"
-              component={authOnly(withCompany(props => <MyCompany onMyCompanyFormSubmit={myCompany} {...props}/>)) }
+              component={authOnly(withCompany(props => <MyCompany onMyCompanyFormSubmit={myCompany} {...props}/>))}
             />
             <Redirect
               to="/login"

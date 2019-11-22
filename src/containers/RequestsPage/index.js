@@ -1,6 +1,5 @@
 import React, {useEffect} from 'react'
 import {Link} from "react-router-dom";
-import styles from "./RequestPage.module.scss"
 import {connect} from "react-redux";
 import {incomeRequestsSelector, outcomeRequestsSelector} from "../../ducks/requests/selectors";
 import {Button, Checkbox, Col, Divider, Row, Table, Tabs} from "antd";
@@ -15,7 +14,6 @@ const RequestsPage = ({outcomeRequests, incomeRequests, dispatch, incomeSwaps, o
 
   const income = [...incomeRequests, ...incomeSwaps]
   const outcome = [...outcomeRequests, ...outcomeSwaps]
-  console.log(income, outcome)
 
   return (
     <Row>
@@ -46,8 +44,8 @@ const RequestsPage = ({outcomeRequests, incomeRequests, dispatch, incomeSwaps, o
                     return (
                       <>
                         {
-                          // record.status === 'pending'
-                          //   ?
+                          record.status === 'pending'
+                            &&
                           <span>
                             {
                               record.type === 'watchlist'
@@ -77,8 +75,6 @@ const RequestsPage = ({outcomeRequests, incomeRequests, dispatch, incomeSwaps, o
                                 </>
                             }
                         </span>
-                          // :
-                          // ''
                         }
                       </>
                     )

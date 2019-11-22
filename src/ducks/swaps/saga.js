@@ -21,15 +21,23 @@ function* fetchSwapsRequest() {
   }
 }
 
-// function* updateSwapRequest() {
-//
-//
-// }
+function* updateSwapRequest({payload}) {
+try {
+  const res = yield axios.patch(`/swaps/${payload.id}/`, payload)
+  yield put({type: 'UPDATE_SWAP_SUCCESS', payload: res.data})
+} catch (e) {
+  //TODO
+  // yield({type: "UPDATE_SWAP_FAILURE"})
+}
+
+}
 
 export function* watchSendSwapRequest() {
   yield takeEvery("ADD_SWAP_REQUEST", sendSwapRequest)
 }
 export function* watchFetchSwapRequest() {
   yield takeEvery("FETCH_SWAPS_REQUEST", fetchSwapsRequest)
-
+}
+export function* watchUpdateSwapRequest() {
+  yield takeEvery("UPDATE_SWAP_REQUEST", updateSwapRequest)
 }

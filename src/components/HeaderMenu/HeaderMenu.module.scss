@@ -1,0 +1,16 @@
+.menu {
+
+
+  .link {
+    color: #000 !important;
+  }
+}
+
+:global(.ant-menu-item-selected) {
+  background-color: #000 !important;
+
+  a {
+    color: #fff !important;
+  }
+}
+
