@@ -14,6 +14,7 @@ const FundraisingPage = ({user}) => (
         <Tabs.TabPane tab="Active" key={1}>
           <div className={styles.fundraisingPageWrapper}>
             <div>
+              {/* TODO select only active fundraising*/}
               {user.company.fundraising.map(el => (
                 <>
                   {console.log(el.raise_limit / el.raised)}
