@@ -25,9 +25,15 @@
 .swapsHeader {
   margin-top: 60px;
 }
-.swapsWrapper {
+.swapsCommonWrapper {
   display: flex;
   justify-content: space-evenly;
+  margin-top: 30px;
 }
 .raisedAmountText {
+}
+.progressBarText {
+  display: flex;
+  flex-direction: column;
+  font-size: 25px;
 }

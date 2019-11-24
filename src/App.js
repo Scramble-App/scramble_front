@@ -44,15 +44,15 @@ function App({dispatch, user}) {
     <Router history={history}>
       <Layout>
         <Layout.Header className={styles.header}>
-          <Row type="flex" align="middle">
-            <Col span={4} offset={4}>
+          <Row type="flex" align="middle" style={{height: '100%'}}>
+            <Col span={4} offset={3}>
               <div className={styles.logo}>
                 <Link to="/">
                   <Logo/>
                 </Link>
               </div>
             </Col>
-            <Col span={10} push={2}>
+            <Col span={11} push={3}>
               {user.id && <HeaderMenu/>}
             </Col>
           </Row>

@@ -1,16 +1,21 @@
 .menu {
 
-
-  .link {
-    color: #000 !important;
-  }
 }
 
-:global(.ant-menu-item-selected) {
-  background-color: #000 !important;
-
-  a {
-    color: #fff !important;
-  }
+:global(.ant-menu.ant-menu-dark .ant-menu-item:hover) {
+  background-color: #000;
 }
+
+:global(.ant-menu.ant-menu-dark .ant-menu-item.ant-menu-item-selected) {
+  background-color: #000;
+}
+
+:global(.ant-menu.ant-menu-dark .ant-menu-item a) {
+  color: #000;
+}
+
+:global(.ant-menu.ant-menu-dark .ant-menu-item-selected a) {
+  color: #fff;
+}
+
 

@@ -28,3 +28,15 @@ export const incomeSwapsSelector = createSelector(
       }))
   )
 )
+
+export const companySwapsSelector = createSelector(
+  [ownCompanySelector, companiesListSelector],
+  (ownCompany, companies) => (
+    ownCompany.fundraising[0].swaps
+      .map(swap => ({
+        ...swap,
+        sender: companies.find(company => company.id === swap.sender) || {},
+        target: companies.find(company => company.id === swap.target) || {}
+      }))
+  )
+)
