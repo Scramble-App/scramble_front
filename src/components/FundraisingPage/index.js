@@ -73,11 +73,11 @@ const FundraisingPage = ({dispatch, user, swaps}) => {
               </div>
             </div>
           </Tabs.TabPane>
-          <Tabs.TabPane tab="Past" key={2}>
-            <div className={styles.fundraisingPageWrapper}>
-              Past
-            </div>
-          </Tabs.TabPane>
+          {/*<Tabs.TabPane tab="Past" key={2}>*/}
+          {/*  <div className={styles.fundraisingPageWrapper}>*/}
+          {/*    Past*/}
+          {/*  </div>*/}
+          {/*</Tabs.TabPane>*/}
         </Tabs>
       </Col>
     </Row>

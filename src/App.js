@@ -9,7 +9,6 @@ import Signup from "./components/Signup";
 import AddCompany from "./components/AddCompany";
 import {authOnly, unauthOnly, withCompany, withoutCompany} from "./auth";
 import Login from "./components/Login";
-import Account from "./containers/Account";
 import MyCompany from "./containers/MyCompany";
 import history from "./history"
 import {Col, Layout, Row} from "antd";
@@ -17,6 +16,7 @@ import styles from './App.module.scss'
 import HeaderMenu from "./components/HeaderMenu";
 import {currentUserSelector} from "./ducks/users/selectors";
 import Logo from "./components/Logo";
+import Footer from "./components/Footer/Footer";
 
 function App({dispatch, user}) {
   useEffect((...props) => {
@@ -33,7 +33,11 @@ function App({dispatch, user}) {
   }
 
   const addCompany = (values) => {
-    dispatch({type: 'ADD_COMPANY_REQUEST', payload: values})
+    const data = new FormData()
+    data.append('logo', values.logo)
+    data.append('name', values.name)
+    data.append('description', values.description)
+    dispatch({type: 'ADD_COMPANY_REQUEST', payload: data})
   }
 
   const myCompany = (values) => {
@@ -42,68 +46,62 @@ function App({dispatch, user}) {
 
   return (
     <Router history={history}>
-      <Layout>
-        <Layout.Header className={styles.header}>
-          <Row type="flex" align="middle" style={{height: '100%'}}>
-            <Col span={4} offset={3}>
-              <div className={styles.logo}>
-                <Link to="/">
-                  <Logo/>
-                </Link>
-              </div>
-            </Col>
-            <Col span={11} push={3}>
-              {user.id && <HeaderMenu/>}
-            </Col>
-          </Row>
-        </Layout.Header>
+      <Layout.Header className={styles.header}>
+        <Row type="flex" align="middle" style={{height: '100%'}}>
+          <Col span={4} offset={3}>
+            <div className={styles.logo}>
+              <Link to="/">
+                <Logo/>
+              </Link>
+            </div>
+          </Col>
+          <Col span={11} push={3}>
+            {user.id && <HeaderMenu/>}
+          </Col>
+        </Row>
+      </Layout.Header>
 
-        <Layout.Content>
-          <Switch>
-            <Route
-              path="/signup"
-              component={unauthOnly(props => <Signup onSignupFormSubmit={signup} {...props}/>)}
-            />
-            <Route
-              path="/login"
-              component={unauthOnly(props => <Login onLoginFormSubmit={login} {...props}/>)}
-            />
-            <Route
-              path="/companies"
-              exact
-              component={authOnly(withCompany(CompaniesList))}
-            />
-            <Route
-              path="/companies/:companyId"
-              component={authOnly(withCompany(CompanyPage))}
-            />
-            <Route
-              path="/fundraising"
-              component={authOnly(withCompany(FundraisingPage))}
-            />
-            <Route
-              path="/requests"
-              component={authOnly(withCompany(RequestsPage))}
-            />
-            <Route
-              path="/add-company"
-              component={authOnly(withoutCompany(props => <AddCompany
-                onAddCompanyFormSubmit={addCompany} {...props} />))}
-            />
-            <Route
-              path="/account"
-              component={authOnly(Account)}
-            />
-            <Route
-              path="/my-company"
-              component={authOnly(withCompany(props => <MyCompany onMyCompanyFormSubmit={myCompany} {...props}/>))}
-            />
-            <Redirect
-              to="/login"
-            />
-          </Switch>
-        </Layout.Content>
-      </Layout>
+      <Switch>
+        <Route
+          path="/signup"
+          component={unauthOnly(props => <Signup onSignupFormSubmit={signup} {...props}/>)}
+        />
+        <Route
+          path="/login"
+          component={unauthOnly(props => <Login onLoginFormSubmit={login} {...props}/>)}
+        />
+        <Route
+          path="/companies"
+          exact
+          component={authOnly(withCompany(CompaniesList))}
+        />
+        <Route
+          path="/companies/:companyId"
+          component={authOnly(withCompany(CompanyPage))}
+        />
+        <Route
+          path="/fundraising"
+          component={authOnly(withCompany(FundraisingPage))}
+        />
+        <Route
+          path="/requests"
+          component={authOnly(withCompany(RequestsPage))}
+        />
+        <Route
+          path="/add-company"
+          component={authOnly(withoutCompany(props => <AddCompany
+            onAddCompanyFormSubmit={addCompany} {...props} />))}
+        />
+        <Route
+          path="/my-company"
+          component={authOnly(withCompany(props => <MyCompany
+            onMyCompanyFormSubmit={myCompany} {...props}/>))}
+        />
+        <Redirect
+          to="/login"
+        />
+      </Switch>
+      <Footer />
     </Router>
   );
 }

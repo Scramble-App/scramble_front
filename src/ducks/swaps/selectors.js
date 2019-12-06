@@ -2,7 +2,7 @@ import {createSelector} from "reselect";
 import {companiesListSelector, ownCompanySelector} from "../companies/selectors";
 
 // TODO fix type hardcode
-export const swapsSelector = state => state.swaps.map(swap => ({...swap, type: 'swap'}))
+export const swapsSelector = state => state.swaps.map(swap => ({...swap}))
 export const outcomeSwapsSelector = createSelector(
   [swapsSelector, companiesListSelector, ownCompanySelector],
   (swaps, companies, ownCompany) => (
@@ -32,6 +32,7 @@ export const incomeSwapsSelector = createSelector(
 export const companySwapsSelector = createSelector(
   [ownCompanySelector, companiesListSelector],
   (ownCompany, companies) => (
+    // TODO active fundraising!
     ownCompany.fundraising[0].swaps
       .map(swap => ({
         ...swap,

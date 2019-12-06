@@ -1,36 +1,120 @@
 .wrapper {
   display: grid;
   grid-template-columns: 1fr 3fr;
-  padding-top: 20pxw;
+  padding-top: 20px;
 }
 
 .subHeader {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 30px;
+
+  h2 {
+    font-weight: 700;
+    text-align: center;
+  }
 }
 
 .companiesList {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-gap: 10px;
+
 }
 
 .companyCard {
-  //text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .founder {
   color: rgba(0, 0, 0, 0.65);
+  font-size: 14px;
 }
+
 .tabContentWrapper {
+  height: 100vh;
   background-color: white;
   padding: 25px 30px 40px 30px;
 }
+
 .filterSliderWrapper {
   margin-top: 15px;
 }
+
 .leftButton {
   margin-right: 8px;
 }
 
+.powerBi {
+  visibility: hidden;
+}
+
+.companyLogo {
+  width: auto;
+  height: 70px;
+}
+
+.companyCard {
+  a {
+    margin-top: 20px;
+    color: #000000;
+    font-weight: 600;
+    font-size: 16px;
+  }
+}
+
+.requestsWrapper {
+  display: flex;
+  flex-direction: column;
+
+  .requestCard {
+  }
+}
+
+.requestType {
+  font-weight: 600;
+  font-size: 15px;
+}
+
+.requestInfo {
+  display: flex;
+  align-items: center;
+}
+
+.ownerInfo {
+  p {
+    margin: 0;
+  }
+}
+
+.pageWrapper {
+  width: 80%;
+  max-width: 1920px;
+  margin: 0 auto;
+}
+
+.rejectButton,
+.acceptButton {
+  width: 96px;
+  height: 36px;
+  border-radius: 30px;
+  font-size: 16px;
+  font-weight: 600;
+}
+.acceptButton {
+  background-color: #000000;
+  color: white;
+  cursor: pointer;
+  outline: none;
+}
+
+.rejectButton {
+  background-color: white;
+  color: #000000;
+  border: 1px solid #000000;
+  cursor: pointer;
+  outline: none;
+}
