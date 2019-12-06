@@ -1,87 +1,36 @@
 import React, {useEffect} from 'react'
 import styles from "./CompaniesList.module.scss";
 import {connect} from "react-redux";
-import {Link} from "react-router-dom";
-import {Button, Card, Col, Row, Select, Slider, Tabs} from "antd";
 import {companiesListSelector} from "../../ducks/companies/selectors";
+import {Link} from "react-router-dom";
 
 const CompaniesList = ({dispatch, companies}) => {
-    useEffect(() => {
-        dispatch({type: 'FETCH_COMPANIES_REQUEST'})
-    }, []);
+  useEffect(() => {
+    dispatch({type: 'FETCH_COMPANIES_REQUEST'})
+  }, []);
 
-    return (
-        //  TODO move to component view
-        <Row gutter={32}>
-            <Col>
-                {/*<Tabs>*/}
-                {/*  <Tabs.TabPane tab="Search" key={1}>*/}
-                <div className={styles.tabContentWrapper}>
-                    <Row gutter={32}>
-                        <Col>
-                            {/*<h3>Filters</h3>*/}
-                            {/*<Select*/}
-                            {/*  mode="multiple"*/}
-                            {/*  style={{width: '200px'}}*/}
-                            {/*  placeholder="Industry"*/}
-                            {/*>*/}
-                            {/*  <Select.Option key={1}>Aerospace</Select.Option>*/}
-                            {/*  <Select.Option key={2}>Transport</Select.Option>*/}
-                            {/*  <Select.Option key={3}>Computer</Select.Option>*/}
-                            {/*</Select>*/}
-                            {/*<div className={styles.filterSliderWrapper}>*/}
-                            {/*  <p>Annual Turnover</p>*/}
-                            {/*  <Slider*/}
-                            {/*    range*/}
-                            {/*    step={10}*/}
-                            {/*    defaultValue={[20, 50]}*/}
-                            {/*  />*/}
-                            {/*  <p>Company age</p>*/}
-                            {/*  <Slider*/}
-                            {/*    range*/}
-                            {/*    step={1}*/}
-                            {/*    defaultValue={[1, 10]}*/}
-                            {/*    max={10}*/}
-                            {/*  />*/}
-                            {/*  <p>Employees number</p>*/}
-                            {/*  <Slider*/}
-                            {/*    range*/}
-                            {/*    step={10}*/}
-                            {/*    defaultValue={[1, 200]}*/}
-                            {/*    max={1000}*/}
-                            {/*  />*/}
-                            {/*  <Button type="default" className={styles.leftButton}> All</Button>*/}
-                            {/*  <Button type="default">Watchlist</Button>*/}
-                            {/*</div>*/}
-                        </Col>
-                        <Col>
-                            <div className={styles.companiesList}>
-                                {companies.map(({name, id, created_at, founder, logo}) => (
-                                    <div key={`${name}_${id}`} className={styles.companyCard}>
-                                        <img className={styles.companyLogo} src={logo}/>
-                                        <a href={`/companies/${id}`}>
-                                            {name}
-                                        </a>
-                                        {founder.trim().length > 0 && <p className={styles.founder}>{founder}</p>}
-                                        <p>Joined {(new Date(created_at)).toDateString()}</p>
-                                    </div>
-                                ))}
-                            </div>
-                        </Col>
-                    </Row>
-                </div>
-                {/*</Tabs.TabPane>*/}
-                {/*<Tabs.TabPane className={styles.powerBi} tab="Power BI" key={2}>*/}
-                {/*  <iframe title="Power BI data" width="100%" height="541.25"*/}
-                {/*          src="https://app.powerbi.com/reportEmbed?reportId=e9c0bf82-f997-42b2-8fb6-db78a15b46ce&autoAuth=true&ctid=dd0bea93-74d1-4e09-bf5f-8d90c0308096&config=eyJjbHVzdGVyVXJsIjoiaHR0cHM6Ly93YWJpLXVzLWVhc3QyLWItcHJpbWFyeS1yZWRpcmVjdC5hbmFseXNpcy53aW5kb3dzLm5ldC8ifQ%3D%3D"*/}
-                {/*          frameBorder="0" allowFullScreen="true"/>*/}
-                {/*</Tabs.TabPane>*/}
-                {/*</Tabs>*/}
-            </Col>
-        </Row>
-    )
+  return (
+    <div className={`${styles.wrapper} ${styles.companiesWrapper}`}>
+        <h2 className={styles.pageTitle}>Browse companies</h2>
+      <div className={styles.companiesList}>
+        {/* TODO no companies message and loader */}
+        {companies.map(({name, id, created_at, founder, logo}) => (
+          <Link to={`/companies/${id}`} key={`${name}_${id}`} className={styles.companyCard}>
+            <div className={styles.logoWrapper}>
+              <img className={styles.companyLogo} src={logo}/>
+            </div>
+            <div className={styles.companyInfo}>
+               <p className={styles.companyName}>{name}</p>
+              <p className={styles.founder}>by {founder}</p>
+              <p className={styles.joinDate}>Joined {(new Date(created_at)).toDateString()}</p>
+            </div>
+          </Link>
+        ))}
+      </div>
+    </div>
+  )
 };
 
 export default connect(state => ({
-    companies: companiesListSelector(state),
+  companies: companiesListSelector(state),
 }), null)(CompaniesList);

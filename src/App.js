@@ -11,12 +11,18 @@ import {authOnly, unauthOnly, withCompany, withoutCompany} from "./auth";
 import Login from "./components/Login";
 import MyCompany from "./containers/MyCompany";
 import history from "./history"
-import {Col, Layout, Row} from "antd";
-import styles from './App.module.scss'
-import HeaderMenu from "./components/HeaderMenu";
 import {currentUserSelector} from "./ducks/users/selectors";
-import Logo from "./components/Logo";
 import Footer from "./components/Footer/Footer";
+import Header from "./components/Header/Header";
+import styles from './App.module.scss'
+
+const appWrapper = Component => props => (
+  <div className={styles.app}>
+    <Header/>
+    <Component {...props} />
+    <Footer/>
+  </div>
+)
 
 function App({dispatch, user}) {
   useEffect((...props) => {
@@ -25,6 +31,10 @@ function App({dispatch, user}) {
   }, [])
 
   const signup = (values) => {
+    const data = new FormData()
+    Object.keys(values).forEach(key => {
+      data.append(key, values[key])
+    })
     dispatch({type: 'SIGNUP_REQUEST', payload: values})
   }
 
@@ -34,9 +44,9 @@ function App({dispatch, user}) {
 
   const addCompany = (values) => {
     const data = new FormData()
-    data.append('logo', values.logo)
-    data.append('name', values.name)
-    data.append('description', values.description)
+    Object.keys(values).forEach(key => {
+      data.append(key, values[key])
+    })
     dispatch({type: 'ADD_COMPANY_REQUEST', payload: data})
   }
 
@@ -46,21 +56,7 @@ function App({dispatch, user}) {
 
   return (
     <Router history={history}>
-      <Layout.Header className={styles.header}>
-        <Row type="flex" align="middle" style={{height: '100%'}}>
-          <Col span={4} offset={3}>
-            <div className={styles.logo}>
-              <Link to="/">
-                <Logo/>
-              </Link>
-            </div>
-          </Col>
-          <Col span={11} push={3}>
-            {user.id && <HeaderMenu/>}
-          </Col>
-        </Row>
-      </Layout.Header>
-
+      {/*<Header />*/}
       <Switch>
         <Route
           path="/signup"
@@ -73,11 +69,11 @@ function App({dispatch, user}) {
         <Route
           path="/companies"
           exact
-          component={authOnly(withCompany(CompaniesList))}
+          component={authOnly(withCompany(appWrapper(CompaniesList)))}
         />
         <Route
           path="/companies/:companyId"
-          component={authOnly(withCompany(CompanyPage))}
+          component={authOnly(withCompany(appWrapper(CompanyPage)))}
         />
         <Route
           path="/fundraising"
@@ -85,7 +81,7 @@ function App({dispatch, user}) {
         />
         <Route
           path="/requests"
-          component={authOnly(withCompany(RequestsPage))}
+          component={authOnly(withCompany(appWrapper(RequestsPage)))}
         />
         <Route
           path="/add-company"
@@ -94,14 +90,14 @@ function App({dispatch, user}) {
         />
         <Route
           path="/my-company"
-          component={authOnly(withCompany(props => <MyCompany
-            onMyCompanyFormSubmit={myCompany} {...props}/>))}
+          component={authOnly(withCompany(appWrapper(props => <MyCompany
+            onMyCompanyFormSubmit={myCompany} {...props}/>)))}
         />
         <Redirect
           to="/login"
         />
       </Switch>
-      <Footer />
+      {/*<Footer/>*/}
     </Router>
   );
 }

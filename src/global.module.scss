@@ -1,0 +1,34 @@
+:global(#root) {
+  height: 100%;
+}
+
+.wrapper {
+  max-width: 1920px;
+  display: flex;
+  width: 50%;
+  margin: 0 auto;
+  justify-content: space-between;
+
+  p {
+    margin: 0;
+  }
+}
+
+  .pageTitle {
+    font-size: 30px;
+    margin-top: 40px;
+  }
+
+    :global(a) {
+    //  TODO
+    color: #f93c10 !important;
+  }
+
+  :global(a:hover) {
+    color: #f92e00 !important;
+  }
+
+  :global(.ant-btn-primary) {
+    background-color: black !important;
+    border: none !important;
+  }

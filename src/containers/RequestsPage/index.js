@@ -17,31 +17,42 @@ const RequestsPage = ({outcomeRequests, incomeRequests, dispatch, incomeSwaps, o
   // TODO outcome
   const outcome = [...outcomeRequests, ...outcomeSwaps]
 
-  return (
-    <div className={styles.pageWrapper}>
-      <div className={styles.requestsWrapper}>
-        {[...income, ...outcome].map(item => (
-          <div key={item.id} className={styles.requestCard}>
-            <div>
-              <span className={styles.requestType}>{item.type === 'swap' ? 'Swap' : 'Watchlist'} request</span>
-              <span>{(new Date(item.created_at)).toDateString()}</span>
-              <button className={styles.rejectButton}>Reject</button>
-              <button className={styles.acceptButton}>Accept</button>
-            </div>
-            <div className={styles.requestInfo}>
-              <div>
-                <img className={styles.companyLogo} src='https://i1.wp.com/ebenezersuites.com/wp-content/uploads/2016/06/airbnb-logo-266x300@2x.png'/>
-              </div>
-              <div className={styles.ownerInfo}>
-                <p>Ivan Ivanov</p>
-                <p>{_.get(item, 'sender.name')}</p>
-                <p>Joined Tue Nov 26 2019</p>
-              </div>
-            </div>
+  const requests = [...income, ...outcome]
 
+  return (
+    <div className={`${styles.wrapper} ${styles.requestsWrapper}`}>
+      <h2 className={styles.pageTitle}>Your requests</h2>
+        {requests.length > 0 ?
+          <p>In progress...</p>
+        //   requests.map(item => (
+        //   <div key={item.id} className={styles.requestCard}>
+        //     <div>
+        //       <span className={styles.requestType}>{item.type === 'swap' ? 'Swap' : 'Watchlist'} request</span>
+        //       <span>{(new Date(item.created_at)).toDateString()}</span>
+        //       <button className={styles.rejectButton}>Reject</button>
+        //       <button className={styles.acceptButton}>Accept</button>
+        //     </div>
+        //     <div className={styles.requestInfo}>
+        //       <div>
+        //         <img className={styles.companyLogo} src='https://i1.wp.com/ebenezersuites.com/wp-content/uploads/2016/06/airbnb-logo-266x300@2x.png'/>
+        //       </div>
+        //       <div className={styles.ownerInfo}>
+        //         <p>Ivan Ivanov</p>
+        //         <p>{_.get(item, 'sender.name')}</p>
+        //         <p>Joined Tue Nov 26 2019</p>
+        //       </div>
+        //     </div>
+        //
+        //   </div>
+        // ))
+        :
+
+          <div>
+            <h3>There are no requests at the moment</h3>
+            <p>Try to <Link to="/companies">browse companies</Link> and send few watchlist requests to get started</p>
           </div>
-        ))}
-      </div>
+
+        }
     </div>
   )
 };

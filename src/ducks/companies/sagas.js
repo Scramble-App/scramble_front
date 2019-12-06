@@ -1,6 +1,7 @@
 import axios from "axios";
 import {call, put, takeEvery} from "@redux-saga/core/effects";
 import history from "../../history";
+import {notification} from "antd";
 
 function* fetchCompaniesRequest() {
   try {
@@ -8,8 +9,7 @@ function* fetchCompaniesRequest() {
 
     yield put({type: 'FETCH_COMPANIES_SUCCESS', payload: res.data})
   } catch (e) {
-    //TODO
-    // yield put({type: 'FETCH_COMPANIES_FAILURE'})
+    notification.error({message: 'Something went wrong. Please try again!'})
   }
 }
 
@@ -20,8 +20,7 @@ function* addCompanyRequest(action) {
     yield put({type: 'FETCH_USER_REQUEST'})
     yield call(history.push, '/companies')
   } catch (e) {
-    //TODO
-    // yield put({type: 'FETCH_COMPANIES_FAILURE'})
+    notification.error({message: 'Something went wrong. Please try again!'})
   }
 }
 
@@ -30,8 +29,7 @@ function* fetchCompanyRequest(action) {
     const res = yield axios.get(`company/${action.payload.companyId}/`)
     yield put({type: 'FETCH_COMPANY_SUCCESS', payload: res.data})
   } catch (e) {
-    //TODO
-    // yield put({type: 'FETCH_COMPANY_FAILURE'})
+    notification.error({message: 'Something went wrong. Please try again!'})
   }
 }
 

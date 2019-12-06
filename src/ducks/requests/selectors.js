@@ -1,6 +1,7 @@
 import {createSelector} from "reselect";
 import {companiesListSelector, ownCompanySelector} from "../companies/selectors";
 import {propsSelector} from "../index";
+import * as _ from 'lodash'
 
 export const requestsSelector = state => state.requests || []
 export const outcomeRequestsSelector = createSelector(
@@ -30,5 +31,5 @@ export const incomeRequestsSelector = createSelector(
 
 export const matchedOutcomeRequestSelector = createSelector(
   [outcomeRequestsSelector, propsSelector],
-  (requests = [], { match }) => requests.find((request) => request.target.id === parseInt(match.params.id))
+  (requests = [], { match }) => requests.find((request) => _.get(request, 'target.id') === parseInt(_.get(match, 'params.id', -1)))
 )

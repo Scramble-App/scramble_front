@@ -1,14 +1,8 @@
-.logo {
-  padding: 0 20px;
-  a,
-  a:hover,
-  a:active {
-    color: white;
-  }
-}
+@import "global.module";
 
-.header {
-  margin-bottom: 30px;
-  background-color: #ffd200 !important;
-  padding: 0 !important;
+.app {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
 }

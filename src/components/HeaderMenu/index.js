@@ -19,17 +19,11 @@ const HeaderMenu = ({ location }) => (
       <Menu.Item key="/requests">
         <Link className={styles.link} to="/requests">Requests</Link>
       </Menu.Item>
-      <Menu.Item key="/fundraising">
-        <Link className={styles.link} to="/fundraising">Financing</Link>
-      </Menu.Item>
-      <Menu.Item key="/my-company">
-        <Link className={styles.link} to="/my-company">Profile</Link>
-      </Menu.Item>
-
-      {/*<Menu.Item key={4}>*/}
-      {/*  <Badge count={1} dot>*/}
-      {/*    <Icon type="notification" />*/}
-      {/*  </Badge>*/}
+      {/*<Menu.Item key="/fundraising">*/}
+      {/*  <Link className={styles.link} to="/fundraising">Financing</Link>*/}
+      {/*</Menu.Item>*/}
+      {/*<Menu.Item key="/my-company">*/}
+      {/*  <Link className={styles.link} to="/my-company">Profile</Link>*/}
       {/*</Menu.Item>*/}
     </Menu>
   </>
