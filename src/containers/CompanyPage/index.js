@@ -31,7 +31,7 @@ const CompanyPage = ({company, ownCompany, dispatch, outcomeRequest, match, comp
   }
 
   const seeAlso = companies
-    .filter(c => c.id !== company.id)
+    .filter(c => c.id !== company.id && c.id !== ownCompany.id)
     .slice(0, 2)
 
   return (
@@ -51,7 +51,7 @@ const CompanyPage = ({company, ownCompany, dispatch, outcomeRequest, match, comp
                 alt="Logo"
               />
             </div>
-            {!outcomeRequest &&
+            {company.id !== ownCompany.id && !outcomeRequest &&
             <Button type="primary" onClick={sendWatchlistRequest}>Add to watchlist</Button>
             }
           </div>

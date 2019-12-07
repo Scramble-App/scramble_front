@@ -31,5 +31,5 @@ export const incomeRequestsSelector = createSelector(
 
 export const matchedOutcomeRequestSelector = createSelector(
   [outcomeRequestsSelector, propsSelector],
-  (requests = [], { match }) => requests.find((request) => _.get(request, 'target.id') === parseInt(_.get(match, 'params.id', -1)))
+  (requests = [], { match }) => requests.find((request) => _.get(request, 'target.id') === parseInt(_.get(match, 'params.companyId', -1)))
 )
