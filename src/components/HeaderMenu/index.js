@@ -22,9 +22,9 @@ const HeaderMenu = ({ location }) => (
       {/*<Menu.Item key="/fundraising">*/}
       {/*  <Link className={styles.link} to="/fundraising">Financing</Link>*/}
       {/*</Menu.Item>*/}
-      {/*<Menu.Item key="/my-company">*/}
-      {/*  <Link className={styles.link} to="/my-company">Profile</Link>*/}
-      {/*</Menu.Item>*/}
+      <Menu.Item key="/profile">
+        <Link className={styles.link} to="/profile">Profile</Link>
+      </Menu.Item>
     </Menu>
   </>
 )

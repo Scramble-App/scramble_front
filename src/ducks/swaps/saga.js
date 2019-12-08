@@ -1,5 +1,5 @@
 import axios from "axios"
-import {call, put, takeEvery} from "@redux-saga/core/effects";
+import {put, takeEvery} from "@redux-saga/core/effects";
 import {notification} from "antd";
 
 function* sendSwapRequest(action) {

@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {Link, Redirect, Route, Router, Switch} from "react-router-dom";
+import {Redirect, Route, Router, Switch} from "react-router-dom";
 import CompaniesList from "./containers/CompaniesList";
 import CompanyPage from "./containers/CompanyPage";
 import FundraisingPage from "./components/FundraisingPage";
@@ -89,7 +89,7 @@ function App({dispatch, user}) {
             onAddCompanyFormSubmit={addCompany} {...props} />))}
         />
         <Route
-          path="/my-company"
+          path="/profile"
           component={authOnly(withCompany(appWrapper(props => <MyCompany
             onMyCompanyFormSubmit={myCompany} {...props}/>)))}
         />
