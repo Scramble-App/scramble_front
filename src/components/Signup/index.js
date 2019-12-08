@@ -1,11 +1,10 @@
 import React from 'react'
-import {Field, Form as FinalForm} from "react-final-form";
+import {Form as FinalForm} from "react-final-form";
 import {Link} from "react-router-dom";
-import {Button, Form, PageHeader} from "antd";
+import {Button, Form} from "antd";
 import styles from "../Login/Login.module.scss";
 import CustomFormField from "../CustomFormField";
 import Logo from "../Logo";
-import DropzoneComp from "../Dropzone/Dropzone";
 
 const Signup = ({onSignupFormSubmit}) => (
   <div className={styles.login}>

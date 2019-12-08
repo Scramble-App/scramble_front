@@ -13,6 +13,7 @@ export const outcomeRequestsSelector = createSelector(
         ...request,
         sender: companies.find(company => company.id === request.sender),
         target: companies.find(company => company.id === request.target),
+        subtype: 'outcome'
       }))
   )
 )
@@ -26,10 +27,11 @@ export const incomeRequestsSelector = createSelector(
         ...request,
         sender: companies.find(company => company.id === request.sender),
         target: companies.find(company => company.id === request.target),
+        subtype: 'income'
       }))
 )
 
-export const matchedOutcomeRequestSelector = createSelector(
+export const matchedOutcomeRequestsSelector = createSelector(
   [outcomeRequestsSelector, propsSelector],
-  (requests = [], { match }) => requests.find((request) => _.get(request, 'target.id') === parseInt(_.get(match, 'params.companyId', -1)))
+  (requests = [], { match }) => requests.filter((request) => _.get(request, 'target.id') === parseInt(_.get(match, 'params.companyId', -1)))
 )

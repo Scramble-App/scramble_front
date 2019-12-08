@@ -1,10 +1,12 @@
-import React, {useEffect} from 'react'
+import React, {useCallback, useEffect} from 'react'
 import {Link} from "react-router-dom";
 import {connect} from "react-redux";
 import {incomeRequestsSelector, outcomeRequestsSelector} from "../../ducks/requests/selectors";
 import {incomeSwapsSelector, outcomeSwapsSelector} from "../../ducks/swaps/selectors";
 import styles from "../CompaniesList/CompaniesList.module.scss";
 import * as _ from 'lodash'
+import CompanyCard from "../../components/CompanyCard/CompanyCard";
+import Button from "antd/es/button";
 
 const RequestsPage = ({outcomeRequests, incomeRequests, dispatch, incomeSwaps, outcomeSwaps}) => {
   useEffect((...props) => {
@@ -13,46 +15,78 @@ const RequestsPage = ({outcomeRequests, incomeRequests, dispatch, incomeSwaps, o
     dispatch({type: 'FETCH_SWAPS_REQUEST'})
   }, [])
 
-  const income = [...incomeRequests, ...incomeSwaps]
-  // TODO outcome
-  const outcome = [...outcomeRequests, ...outcomeSwaps]
+  console.log(incomeSwaps)
 
+  const income = [...incomeRequests, ...incomeSwaps]
+  const outcome = [...outcomeRequests, ...outcomeSwaps]
   const requests = [...income, ...outcome]
+
+  const approve = useCallback(({id, type, sender, target}) => {
+    const action = type === 'swap' ? 'UPDATE_SWAP_REQUEST' : 'UPDATE_WATCHLIST_REQUEST'
+    dispatch({
+      type: action,
+      payload: {
+        id,
+        sender: sender.id,
+        target: target.id,
+        status: 'accepted'
+      }
+    })
+  }, [])
+
+  const reject = useCallback(({id, type, sender, target}) => {
+    const action = type === 'swap' ? 'UPDATE_SWAP_REQUEST' : 'UPDATE_WATCHLIST_REQUEST'
+    dispatch({
+      type: action,
+      payload: {
+        id,
+        sender: sender.id,
+        target: target.id,
+        status: 'declined'
+      }
+    })
+  }, [])
 
   return (
     <div className={`${styles.wrapper} ${styles.requestsWrapper}`}>
       <h2 className={styles.pageTitle}>Your requests</h2>
+      <div className={styles.requests}>
         {requests.length > 0 ?
-          <p>In progress...</p>
-        //   requests.map(item => (
-        //   <div key={item.id} className={styles.requestCard}>
-        //     <div>
-        //       <span className={styles.requestType}>{item.type === 'swap' ? 'Swap' : 'Watchlist'} request</span>
-        //       <span>{(new Date(item.created_at)).toDateString()}</span>
-        //       <button className={styles.rejectButton}>Reject</button>
-        //       <button className={styles.acceptButton}>Accept</button>
-        //     </div>
-        //     <div className={styles.requestInfo}>
-        //       <div>
-        //         <img className={styles.companyLogo} src='https://i1.wp.com/ebenezersuites.com/wp-content/uploads/2016/06/airbnb-logo-266x300@2x.png'/>
-        //       </div>
-        //       <div className={styles.ownerInfo}>
-        //         <p>Ivan Ivanov</p>
-        //         <p>{_.get(item, 'sender.name')}</p>
-        //         <p>Joined Tue Nov 26 2019</p>
-        //       </div>
-        //     </div>
-        //
-        //   </div>
-        // ))
-        :
+          requests.map(item => {
+            const subject = item.subtype === 'income' ? item.sender : item.target
 
+            if (!subject) return ''
+
+            return (
+              <div key={`${item.type}_${item.id}`} className={styles.requestCard}>
+                <div>
+                  <h3 className={styles.requestType}>
+                    {item.subtype === 'income' ? 'Income' : 'Outcome'} {item.type} request
+                    <span className={`${styles.status} ${styles[item.status]}`}>{item.status}</span>
+                  </h3>
+                  <span className={styles.date}>{(new Date(item.created_at)).toDateString()}</span>
+                </div>
+                <div className={styles.requestInfo}>
+                  <div className={styles.ownerInfo}>
+                    <CompanyCard company={subject}/>
+                    {item.subtype === 'income' && item.status === 'pending' &&
+                    <>
+                      <Button onClick={() => reject(item)} className={styles.rejectButton}>Reject</Button>
+                      <Button onClick={() => approve(item)} type={"primary"}>Accept</Button>
+                    </>
+                    }
+                  </div>
+                </div>
+              </div>
+            )
+          })
+          :
           <div>
             <h3>There are no requests at the moment</h3>
             <p>Try to <Link to="/companies">browse companies</Link> and send few watchlist requests to get started</p>
           </div>
-
         }
+      </div>
     </div>
   )
 };

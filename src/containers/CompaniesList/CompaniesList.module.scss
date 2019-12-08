@@ -25,13 +25,14 @@
   flex-wrap: wrap;
   max-height: 100%;
   overflow-y: auto;
+  justify-content: space-between;
 }
 
 .companyCard {
-  width: 50%;
   display: flex;
   align-items: center;
   padding: 20px 0;
+  margin-right: 20px;
 }
 
 .companyInfo {
@@ -91,14 +92,58 @@
 .requestsWrapper {
   max-height: 100%;
   height: 100%;
+  overflow-y: auto;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
 }
 
+.requests {
+}
+
+.requestCard {
+  margin-bottom: 50px;
+  margin-right: 20px;
+}
+
 .requestType {
-  font-weight: 600;
-  font-size: 15px;
+  font-weight: 400;
+  font-size: 20px;
+  margin-bottom: 0;
+}
+
+.status {
+  display: inline-block;
+  vertical-align: middle;
+  padding: 0 8px;
+  border-radius: 100px;
+  border: 1px solid black;
+  font-size: 12px;
+  line-height: 20px;
+  background-color: white;
+  color: black;
+  font-weight: 400;
+  margin-left: 5px;
+  transform: scale(.85);
+
+  &.accepted {
+    background-color: $yellow_color;
+    color: black;
+    border: none;
+  }
+
+  &.declined {
+    background-color: $red_color;
+    color: white;
+    border: none;
+  }
+}
+
+.date {
+  font-style: italic;
+  font-size: 12px;
+  display: inline-block;
+  vertical-align: middle;
 }
 
 .requestInfo {
@@ -106,32 +151,6 @@
   align-items: center;
 }
 
-.ownerInfo {
-  p {
-    margin: 0;
-  }
-}
-
-.rejectButton,
-.acceptButton {
-  width: 96px;
-  height: 36px;
-  border-radius: 30px;
-  font-size: 16px;
-  font-weight: 600;
-}
-
-.acceptButton {
-  background-color: #000000;
-  color: white;
-  cursor: pointer;
-  outline: none;
-}
-
 .rejectButton {
-  background-color: white;
-  color: #000000;
-  border: 1px solid #000000;
-  cursor: pointer;
-  outline: none;
+  margin-right: 10px;
 }

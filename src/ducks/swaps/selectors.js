@@ -11,7 +11,8 @@ export const outcomeSwapsSelector = createSelector(
       .map((swap) => ({
         ...swap,
         sender: companies.find(company => company.id === swap.sender),
-        target: companies.find(company => company.id === swap.target)
+        target: companies.find(company => company.id === swap.target),
+        subtype: 'outcome'
       }))
   )
 )
@@ -24,7 +25,8 @@ export const incomeSwapsSelector = createSelector(
       .map((swap) => ({
         ...swap,
         sender: companies.find(company => company.id === swap.sender),
-        target: companies.find(company => company.id === swap.target)
+        target: companies.find(company => company.id === swap.target),
+        subtype: 'income'
       }))
   )
 )

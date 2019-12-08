@@ -3,6 +3,7 @@ import styles from "./CompaniesList.module.scss";
 import {connect} from "react-redux";
 import {companiesListSelector} from "../../ducks/companies/selectors";
 import {Link} from "react-router-dom";
+import CompanyCard from "../../components/CompanyCard/CompanyCard";
 
 const CompaniesList = ({dispatch, companies}) => {
   useEffect(() => {
@@ -11,21 +12,10 @@ const CompaniesList = ({dispatch, companies}) => {
 
   return (
     <div className={`${styles.wrapper} ${styles.companiesWrapper}`}>
-        <h2 className={styles.pageTitle}>Browse companies</h2>
+      <h2 className={styles.pageTitle}>Browse companies</h2>
       <div className={styles.companiesList}>
         {/* TODO no companies message and loader */}
-        {companies.map(({name, id, created_at, founder, logo}) => (
-          <Link to={`/companies/${id}`} key={`${name}_${id}`} className={styles.companyCard}>
-            <div className={styles.logoWrapper}>
-              <img className={styles.companyLogo} src={logo}/>
-            </div>
-            <div className={styles.companyInfo}>
-               <p className={styles.companyName}>{name}</p>
-              <p className={styles.founder}>by {founder}</p>
-              <p className={styles.joinDate}>Joined {(new Date(created_at)).toDateString()}</p>
-            </div>
-          </Link>
-        ))}
+        {companies.map(company => <CompanyCard company={company} />)}
       </div>
     </div>
   )
