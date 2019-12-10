@@ -77,7 +77,7 @@ function App({dispatch, user}) {
         />
         <Route
           path="/fundraising"
-          component={authOnly(withCompany(FundraisingPage))}
+          component={authOnly(withCompany(appWrapper(FundraisingPage)))}
         />
         <Route
           path="/requests"

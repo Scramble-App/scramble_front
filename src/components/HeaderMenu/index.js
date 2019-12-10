@@ -19,9 +19,9 @@ const HeaderMenu = ({ location }) => (
       <Menu.Item key="/requests">
         <Link className={styles.link} to="/requests">Requests</Link>
       </Menu.Item>
-      {/*<Menu.Item key="/fundraising">*/}
-      {/*  <Link className={styles.link} to="/fundraising">Financing</Link>*/}
-      {/*</Menu.Item>*/}
+      <Menu.Item key="/fundraising">
+        <Link className={styles.link} to="/fundraising">Financing</Link>
+      </Menu.Item>
       <Menu.Item key="/profile">
         <Link className={styles.link} to="/profile">Profile</Link>
       </Menu.Item>
