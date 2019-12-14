@@ -18,8 +18,16 @@
   }
 }
 
+.updates {
+  margin-top: 10px;
+  margin-bottom: 20px;
 
-.textarea {
-  width: 400px;
-  min-height: 105px;
+  textarea {
+    padding: 10px;
+    outline: none;
+    width: 100%;
+    min-height: 100px;
+    border: 1px solid $yellow_color;
+    border-radius: 5px;
+  }
 }

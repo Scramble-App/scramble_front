@@ -1,12 +1,12 @@
 import React, {useEffect} from "react";
-import {Button, Col, Form, Row, Table} from "antd";
-import styles from "./MyCompany.module.scss"
+import {Button, Form} from "antd";
 import {Field, Form as FinalForm} from "react-final-form";
 import {connect} from "react-redux";
 import {ownCompanySelector} from "../../ducks/companies/selectors";
 import {updatesSelector} from "../../ducks/updates/selectors";
 import {currentUserSelector} from "../../ducks/users/selectors";
 import CompanyCard from "../../components/CompanyCard/CompanyCard";
+import styles from './MyCompany.module.scss'
 
 
 const MyCompany = ({company, dispatch, updates, onMyCompanyFormSubmit, user}) => {
@@ -27,45 +27,29 @@ const MyCompany = ({company, dispatch, updates, onMyCompanyFormSubmit, user}) =>
         <CompanyCard company={company} />
       </div>
 
-          {/*<div>*/}
-          {/*  <h2>Add company update</h2>*/}
-          {/*  <FinalForm*/}
-          {/*    onSubmit={onMyCompanyFormSubmit}*/}
-          {/*    render={({handleSubmit}) => (*/}
-          {/*      <Form onSubmit={handleSubmit}>*/}
-          {/*        <Field*/}
-          {/*          name="text"*/}
-          {/*          component="textarea"*/}
-          {/*          className={style.textarea}*/}
-          {/*        >*/}
-          {/*        </Field>*/}
-          {/*        <br/>*/}
-          {/*        <Button type="primary"*/}
-          {/*                htmlType="submit">Add</Button>*/}
-          {/*      </Form>*/}
-          {/*    )}*/}
-          {/*  />*/}
-          {/*</div>*/}
-          {/*<h2>Your company's updates</h2>*/}
-          {/*<Table*/}
-          {/*  columns={[*/}
-          {/*    {*/}
-          {/*      title: 'Update',*/}
-          {/*      dataIndex: 'text',*/}
-          {/*      key: 'update'*/}
-          {/*    },*/}
-          {/*    {*/}
-          {/*      title: 'Date',*/}
-          {/*      dataIndex: 'created_at',*/}
-          {/*      key: 'date',*/}
-          {/*      render: text => <span>{(new Date(text)).toDateString()}</span>*/}
-          {/*    }*/}
-          {/*  ]}*/}
-          {/*  dataSource={updates}*/}
-          {/*/>*/}
-      {/*  <iframe title="company PowerBI" width="100%" height="541.25"*/}
-      {/*          src="https://app.powerbi.com/reportEmbed?reportId=034bdd15-a2b0-4223-a375-26f6d9320a59&autoAuth=true&ctid=dd0bea93-74d1-4e09-bf5f-8d90c0308096&config=eyJjbHVzdGVyVXJsIjoiaHR0cHM6Ly93YWJpLXVzLWVhc3QyLWItcHJpbWFyeS1yZWRpcmVjdC5hbmFseXNpcy53aW5kb3dzLm5ldC8ifQ%3D%3D"*/}
-      {/*          frameBorder="0" allowFullScreen="true"/>*/}
+        <div className={styles.updates}>
+          <h2>Add company update</h2>
+          <FinalForm
+            onSubmit={onMyCompanyFormSubmit}
+            render={({handleSubmit, form}) => (
+              <Form onSubmit={(event) => {
+                handleSubmit(event)
+                form.reset()
+              }}>
+                <Field
+                  name="text"
+                  component="textarea"
+                  className={styles.textarea}
+                  placeholder="Update notes"
+                >
+                </Field>
+                <br/>
+                <Button type="primary"
+                        htmlType="submit">Add</Button>
+              </Form>
+            )}
+          />
+        </div>
     </div>
 
   )

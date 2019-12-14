@@ -1,11 +1,11 @@
 import React, {useCallback, useEffect} from 'react'
 import styles from './CompanyPage.module.scss'
 import {connect} from "react-redux";
-import {Button} from "antd";
+import {Button, Table} from "antd";
 import {companiesListSelector, matchedCompanySelector, ownCompanySelector} from "../../ducks/companies/selectors";
 import {matchedOutcomeRequestsSelector} from "../../ducks/requests/selectors";
 import CompanyCard from "../../components/CompanyCard/CompanyCard";
-
+import * as _ from 'lodash'
 
 const CompanyPage = ({company, ownCompany, dispatch, outcomeRequests, match, companies}) => {
   useEffect(() => {
@@ -65,34 +65,31 @@ const CompanyPage = ({company, ownCompany, dispatch, outcomeRequests, match, com
         </div>
       </div>
 
-      {/*<Button*/}
-      {/*  onClick={() => dispatch({type: "ADD_SWAP_REQUEST", payload: {target: parseInt(match.params.companyId, 10)}})}>Send*/}
-      {/*  swap</Button>*/}
-      {/*<div>*/}
-      {/*  {_.get(company, 'updates.length') > 0 &&*/}
-      {/*  <>*/}
-      {/*    <h4>Monthly updates:</h4>*/}
-      {/*    <Table*/}
-      {/*      pagination={false}*/}
-      {/*      size="middle"*/}
-      {/*      columns={[*/}
-      {/*        {*/}
-      {/*          title: "Update",*/}
-      {/*          dataIndex: 'text',*/}
-      {/*          key: 'text'*/}
-      {/*        },*/}
-      {/*        {*/}
-      {/*          title: "Date",*/}
-      {/*          dataIndex: 'created_at',*/}
-      {/*          key: "created_at",*/}
-      {/*          render: text => <p className={styles.datetime}>{(new Date(text)).toDateString()}</p>*/}
-      {/*        }*/}
-      {/*      ]}*/}
-      {/*      dataSource={company.updates}*/}
-      {/*    />*/}
-      {/*  </>*/}
-      {/*  }*/}
-      {/*</div>*/}
+      <div>
+        {_.get(company, 'updates.length') > 0 &&
+        <>
+          <h4 className={styles.aboutTitle}>Monthly updates</h4>
+          <Table
+            pagination={false}
+            size="middle"
+            columns={[
+              {
+                title: "Update",
+                dataIndex: 'text',
+                key: 'text'
+              },
+              {
+                title: "Date",
+                dataIndex: 'created_at',
+                key: "created_at",
+                render: text => <p className={styles.datetime}>{(new Date(text)).toDateString()}</p>
+              }
+            ]}
+            dataSource={company.updates}
+          />
+        </>
+        }
+      </div>
       {seeAlso.length > 0 &&
 
       <div className={styles.seeAlso}>

@@ -1,5 +1,6 @@
 import axios from "axios";
-import {call, put, takeEvery} from "@redux-saga/core/effects";
+import {put, takeEvery} from "@redux-saga/core/effects";
+import {notification} from "antd";
 
 
 function* fetchCompanyUpdates () {
@@ -7,18 +8,16 @@ function* fetchCompanyUpdates () {
     const res = yield axios.get('/update/')
     yield put({type: 'FETCH_UPDATES_SUCCESS', payload: res.data})
   } catch (e) {
-    //TODO
-    // put({type: 'FETCH_UPDATES_SUCCESS'})
+    notification.error({message: 'Something went wrong. Please try again!'})
   }
 }
 function* addCompanyUpdate (action) {
   try {
     const res = yield axios.post('/update/', action.payload)
     yield put({type: 'ADD_UPDATE_SUCCESS', payload: res.data})
+    notification.success({message: `You've successfully added company update!`})
   } catch (e) {
-    console.log(e)
-    //TODO
-    // put({type: 'ADD_UPDATE_SUCCESS'})
+    notification.error({message: 'Something went wrong. Please try again!'})
   }
 }
 export function* watchAddCompanyUpdate () {
