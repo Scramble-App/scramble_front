@@ -92,6 +92,7 @@
     background-size: 0 0;
     transition: background-size .25s ease-in-out;
     color: white;
+    outline: none;
 
     &:hover {
       background-size: 200% 200%;
