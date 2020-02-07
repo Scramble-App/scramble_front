@@ -4,36 +4,98 @@
   display: flex;
   height: 100%;
   align-items: center;
+  background: black;
+  flex-direction: column;
 
-  & > * {
-    height: 100%;
+  .loginHeader {
     display: flex;
-    align-items: center;
-    flex-direction: column;
+    width: 100%;
+    justify-content: space-between;
+    padding: 30px 50px;
+
+    .loginClose {
+      a {
+        background-color: #fcd11b;
+        border-radius: 100%;
+        width: 28px;
+        display: inline-flex;
+        height: 28px;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        color: black !important;
+        transition: transform .3s ease-in-out;
+        font-size: 10px;
+
+        &:hover {
+          transform: scale(1.1);
+        }
+      }
+
+
+    }
   }
 }
 
-.side {
-  background: $yellow_color;
-  width: 30%;
-  justify-content: flex-start;
-  padding-top: 40px;
-}
-
 .form {
-  background: #fff;
-  width: 70%;
   justify-content: center;
   align-items: flex-start;
-  padding-left: 5%;
+  width: 200px;
+  margin-top: 60px;
 
   h3 {
     font-size: 20px;
     font-weight: 500;
   }
 
-  form {
-    width: 30%;
+  label {
+    font-size: 12px !important;
+    display: flex;
+    color: white;
+    font-weight: 600;
+    margin-top: 40px;
+  }
+
+  input {
+    display: block;
+    width: 100%;
+    padding: .5rem 0;
+    border: none;
+    border-radius: 0;
+    border-bottom: 2px white solid;
+    background: transparent;
+    outline: none;
+    color: #fff;
+    font-weight: 600;
+    transition: all .3s ease;
+    font-size: 16px;
+
+    &:focus,
+    &:hover {
+      border-bottom-color: $yellow_color;
+    }
+  }
+
+  button {
+    height: 200px;
+    width: 200px;
+    border-radius: 100%;
+    border: 2px solid $yellow_color !important;
+    margin-top: 55px;
+    text-transform: uppercase;
+    font-weight: 600;
+    font-size: 16px;
+    background-color: rgba(0,0,0,0);
+    background-image: radial-gradient(#fcd11b 50%, rgba(0,0,0,0) 50%, rgba(0,0,0,0) 100%);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 0 0;
+    transition: background-size .25s ease-in-out;
+    color: white;
+
+    &:hover {
+      background-size: 200% 200%;
+    }
   }
 }
 

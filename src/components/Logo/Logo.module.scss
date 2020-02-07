@@ -3,4 +3,8 @@
   width: 80px;
   height: 20px;
   align-self: center;
+
+  &.white {
+      background-image: url("./img/logo_white.svg");
+  }
 }

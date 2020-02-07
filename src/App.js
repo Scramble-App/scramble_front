@@ -58,10 +58,10 @@ function App({dispatch, user}) {
     <Router history={history}>
       {/*<Header />*/}
       <Switch>
-        <Route
-          path="/signup"
-          component={unauthOnly(props => <Signup onSignupFormSubmit={signup} {...props}/>)}
-        />
+        {/*<Route*/}
+        {/*  path="/signup"*/}
+        {/*  component={unauthOnly(props => <Signup onSignupFormSubmit={signup} {...props}/>)}*/}
+        {/*/>*/}
         <Route
           path="/login"
           component={unauthOnly(props => <Login onLoginFormSubmit={login} {...props}/>)}
