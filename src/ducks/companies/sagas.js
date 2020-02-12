@@ -1,5 +1,5 @@
 import axios from "axios";
-import {call, put, takeEvery} from "@redux-saga/core/effects";
+import {call, put, take, takeEvery} from "@redux-saga/core/effects";
 import history from "../../history";
 import {notification} from "antd";
 
@@ -26,6 +26,7 @@ function* addCompanyRequest(action) {
 
 function* fetchCompanyRequest(action) {
   try {
+    yield take('FETCH_COMPANIES_SUCCESS')
     const res = yield axios.get(`company/${action.payload.companyId}/`)
     yield put({type: 'FETCH_COMPANY_SUCCESS', payload: res.data})
   } catch (e) {

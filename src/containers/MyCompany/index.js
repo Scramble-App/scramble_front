@@ -17,41 +17,39 @@ const MyCompany = ({company, dispatch, updates, onMyCompanyFormSubmit, user}) =>
   return (
     <div className={`${styles.wrapper} ${styles.accountWrapper}`}>
       <div>
-          <h2 className={styles.pageTitle}>My account</h2>
-          <p className={styles.field}>Email: {user.email}</p>
-          <p className={styles.field}>Full name: {user.first_name} {user.last_name}</p>
-          <Button type="primary" onClick={() => dispatch({type: 'LOGOUT_REQUEST'})}>Log out</Button>
+        <h2 className={styles.pageTitle}>My account</h2>
+        <p className={styles.field}>Email: {user.email}</p>
+        <p className={styles.field}>Full name: {user.first_name} {user.last_name}</p>
+        <Button type="primary" onClick={() => dispatch({type: 'LOGOUT_REQUEST'})}>Log out</Button>
       </div>
       <div>
-          <h2 className={styles.pageTitle}>Company info</h2>
-        <CompanyCard company={company} />
+        <h2 className={styles.pageTitle}>Company info</h2>
+        <CompanyCard company={company}/>
       </div>
 
-        <div className={styles.updates}>
-          <h2>Add company update</h2>
-          <FinalForm
-            onSubmit={onMyCompanyFormSubmit}
-            render={({handleSubmit, form}) => (
-              <Form onSubmit={(event) => {
-                handleSubmit(event)
-                form.reset()
-              }}>
-                <Field
-                  name="text"
-                  component="textarea"
-                  className={styles.textarea}
-                  placeholder="Update notes"
-                >
-                </Field>
-                <br/>
-                <Button type="primary"
-                        htmlType="submit">Add</Button>
-              </Form>
-            )}
-          />
-        </div>
+      <div className={styles.updates}>
+        <h2>Add company update</h2>
+        <FinalForm
+          onSubmit={onMyCompanyFormSubmit}
+          render={({handleSubmit, form}) => (
+            <Form onSubmit={(event) => {
+              handleSubmit(event)
+              form.reset()
+            }}>
+              <Field
+                name="text"
+                component="textarea"
+                className={styles.textarea}
+                placeholder="Update notes"
+              >
+              </Field>
+              <br/>
+              <Button type="primary" htmlType="submit">Add</Button>
+            </Form>
+          )}
+        />
+      </div>
     </div>
-
   )
 }
 export default connect(
