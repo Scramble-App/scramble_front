@@ -10,7 +10,6 @@ import * as _ from 'lodash'
 const CompanyPage = ({company, ownCompany, dispatch, outcomeRequests, match, companies}) => {
   useEffect(() => {
     dispatch({type: 'GET_WATCHLISTS_REQUEST'})
-    dispatch({type: 'FETCH_COMPANIES_REQUEST'})
     dispatch({type: 'FETCH_COMPANY_REQUEST', payload: {companyId: match.params.companyId}})
   }, []);
   const sendWatchlistRequest = useCallback(() => {

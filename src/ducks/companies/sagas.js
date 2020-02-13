@@ -26,7 +26,8 @@ function* addCompanyRequest(action) {
 
 function* fetchCompanyRequest(action) {
   try {
-    yield take('FETCH_COMPANIES_SUCCESS')
+    // Need this to display SEE ALSO block
+    yield call(fetchCompaniesRequest)
     const res = yield axios.get(`company/${action.payload.companyId}/`)
     yield put({type: 'FETCH_COMPANY_SUCCESS', payload: res.data})
   } catch (e) {
