@@ -8,6 +8,11 @@ import store from "./store";
 import axios from 'axios'
 import Cookies from 'js-cookie'
 import 'antd/dist/antd.css';
+import ReactGA from 'react-ga';
+
+// TODO move to env file
+ReactGA.initialize('G-9NJ4T24GHN');
+ReactGA.pageview(window.location.pathname + window.location.search);
 
 axios.defaults.baseURL = `/api/`;
 axios.interceptors.request.use(config => {
