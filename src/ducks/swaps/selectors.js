@@ -34,7 +34,7 @@ export const incomeSwapsSelector = createSelector(
 export const companySwapsSelector = createSelector(
   [ownCompanySelector, companiesListSelector],
   (ownCompany, companies) => (
-    // TODO active fundraising!
+    // TODO active fundraising! https://scrambleup.atlassian.net/browse/SCR-21
     ownCompany.fundraising[0].swaps
       .map(swap => ({
         ...swap,

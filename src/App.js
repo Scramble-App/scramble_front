@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import {Redirect, Route, Router, Switch} from "react-router-dom";
 import CompaniesList from "./containers/CompaniesList";
 import CompanyPage from "./containers/CompanyPage";
-import FundraisingPage from "./components/FundraisingPage";
+import FundraisingPage from "./containers/FundraisingPage";
 import RequestsPage from "./containers/RequestsPage";
 import {connect} from "react-redux";
 import Signup from "./components/Signup";

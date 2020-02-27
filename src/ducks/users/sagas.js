@@ -4,7 +4,7 @@ import Cookies from "js-cookie";
 import history from "../../history";
 import {notification} from "antd";
 
-function* fetchUser () {
+export function* fetchUser () {
   try {
     const res = yield axios.get('auth/users/me/')
     yield put({type: 'FETCH_USER_SUCCESS', payload: res.data})
