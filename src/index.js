@@ -11,7 +11,7 @@ import 'antd/dist/antd.css';
 import ReactGA from 'react-ga';
 
 // TODO move to env file
-ReactGA.initialize('UA-158587951');
+ReactGA.initialize('UA-159394733-1');
 ReactGA.pageview(window.location.pathname + window.location.search);
 
 axios.defaults.baseURL = `/api/`;
