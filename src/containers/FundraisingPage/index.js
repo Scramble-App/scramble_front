@@ -1,7 +1,7 @@
 import React, {useCallback, useEffect} from 'react'
 import styles from './FundraisingPage.module.scss'
 import {Link} from "react-router-dom";
-import {Col, Progress, Row, Tabs} from "antd";
+import {Progress} from "antd";
 import {connect} from "react-redux";
 import {currentUserSelector} from "../../ducks/users/selectors";
 import {companySwapsSelector} from "../../ducks/swaps/selectors";
@@ -18,8 +18,8 @@ const FundraisingPage = ({dispatch, user, swaps}) => {
 
   const incomeSwaps = swaps.filter(swap => swap.status === 'pending' && swap.target.id === user.company.id)
   const outcomeSwaps = swaps.filter(swap => swap.status === 'pending' && swap.sender.id === user.company.id)
-  const confirmedSwaps = swaps.filter(swap => swap.status === 'accepted')
-  const acceptedSwaps = swaps.filter(swap => swap.status === 'taken')
+  const acceptedSwaps = swaps.filter(swap => swap.status === 'accepted')
+  const confirmedSwaps = swaps.filter(swap => swap.status === 'taken')
   const rejectedSwaps = swaps.filter(swap => swap.status === 'declined')
 
 
@@ -79,8 +79,8 @@ const FundraisingPage = ({dispatch, user, swaps}) => {
               incomeSwaps.map(swap => (
                 <div className={styles.swapCard}>
                   <CompanyCard company={swap.sender}/>
-                    <Button onClick={() => reject(swap)} className={styles.rejectButton}>Reject</Button>
-                    <Button onClick={() => approve(swap)} type={"primary"}>Accept</Button>
+                  <Button onClick={() => reject(swap)} className={styles.rejectButton}>Reject</Button>
+                  <Button onClick={() => approve(swap)} type={"primary"}>Accept</Button>
                 </div>
               ))
             }
@@ -109,22 +109,92 @@ const FundraisingPage = ({dispatch, user, swaps}) => {
         <div className={styles.swapsSection}>
           <h2>Confirmed swap requests</h2>
           {confirmedSwaps.length ?
-            <>{
-              confirmedSwaps.map(swap => (
-                <div className={styles.swapCard}>
-                  <CompanyCard company={swap.target}/>
-                </div>
-              ))
-            }
-            </>
+            <table>
+              <tr>
+                <th>Date</th>
+                <th>Company</th>
+                <th>Partner</th>
+                <th>Swap Amount</th>
+              </tr>
+
+              {confirmedSwaps.map(swap => {
+                const partner = swap.sender.id === user.company.id ? swap.target : swap.sender
+
+                return (
+                  <tr>
+                    <td>{(new Date(swap.created_at)).toDateString()}</td>
+                    <td>{partner.name}</td>
+                    <td>{partner.founder}</td>
+                  </tr>
+                )
+              })
+              }
+            </table>
             :
             <p>No confirmed swap requests yet.</p>
+          }
+        </div>
+
+        <div className={styles.swapsSection}>
+          <h2>Accepted swap requests</h2>
+          {acceptedSwaps.length ?
+            <table>
+              <tr>
+                <th>Date</th>
+                <th>Company</th>
+                <th>Partner</th>
+              </tr>
+
+              {acceptedSwaps.map(swap => {
+                const partner = swap.sender.id === user.company.id ? swap.target : swap.sender
+
+                return (
+                  <tr>
+                    <td>{(new Date(swap.created_at)).toDateString()}</td>
+                    <td>{partner.name}</td>
+                    <td>{partner.founder}</td>
+                  </tr>
+                )
+              })
+              }
+            </table>
+            :
+            <p>No accepted swap requests yet.</p>
+          }
+        </div>
+
+        <div className={styles.swapsSection}>
+          <h2>Rejected swap requests</h2>
+          {rejectedSwaps.length ?
+            <table>
+              <tr>
+                <th>Date</th>
+                <th>Company</th>
+                <th>Partner</th>
+              </tr>
+
+              {rejectedSwaps.map(swap => {
+                const partner = swap.sender.id === user.company.id ? swap.target : swap.sender
+
+                return (
+                  <tr>
+                    <td>{(new Date(swap.created_at)).toDateString()}</td>
+                    <td>{partner.name}</td>
+                    <td>{partner.founder}</td>
+                  </tr>
+                )
+              })
+              }
+            </table>
+            :
+            <p>No rejected swap requests yet.</p>
           }
         </div>
       </div>
     </div>
   )
 }
+
 export default connect(state => ({
   user: currentUserSelector(state),
   swaps: companySwapsSelector(state)
