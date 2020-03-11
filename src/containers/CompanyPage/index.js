@@ -58,7 +58,7 @@ const CompanyPage = ({company, ownCompany, dispatch, outcomeRequests, match, com
           <Button type="primary" onClick={sendWatchlistRequest}>Add to watchlist</Button>
           }
           {/* TODO holy shit */}
-          {ownCompany.watchlist && ownCompany.watchlist.some(id => id === company.id) && !ownCompany.fundraising[0].swaps.some(req => req.target === company.id || req.sender === company.id) &&
+          {!ownCompany.fundraising[0].swaps.some(req => req.target === company.id || req.sender === company.id) &&
           <Button type="primary" onClick={sendSwapRequest}>Send swap request</Button>
           }
         </div>
