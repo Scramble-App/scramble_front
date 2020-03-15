@@ -14,27 +14,29 @@ const CompanyPage = ({company, ownCompany, dispatch, outcomeRequests, match, com
   }, []);
   const sendWatchlistRequest = useCallback(() => {
     dispatch({
-        type: 'SEND_WATCHLIST_REQUEST_REQUEST',
-        payload: {
-          target: company.id,
-          sender: ownCompany.id
-        }
-      })
+      type: 'SEND_WATCHLIST_REQUEST_REQUEST',
+      payload: {
+        target: company.id,
+        sender: ownCompany.id
+      }
+    })
   }, [company, ownCompany])
 
   const sendSwapRequest = useCallback(() => {
     dispatch({
-        type: 'ADD_SWAP_REQUEST',
-        payload: {
-          target: company.id,
-          sender: ownCompany.id
-        },
-      })
+      type: 'ADD_SWAP_REQUEST',
+      payload: {
+        target: company.id,
+        sender: ownCompany.id
+      },
+    })
   }, [company, ownCompany])
 
   const seeAlso = companies
     .filter(c => c.id !== company.id && c.id !== ownCompany.id)
     .slice(0, 2)
+
+  const isOwnCompanyPage = company.id === ownCompany.id
 
   return (
     <div className={`${styles.wrapper} ${styles.companyPage}`}>
@@ -53,14 +55,19 @@ const CompanyPage = ({company, ownCompany, dispatch, outcomeRequests, match, com
               alt="Logo"
             />
           </div>
-          {/* TODO God */}
-          {ownCompany.watchlist && !ownCompany.watchlist.some(id => id === company.id) && company.id !== ownCompany.id && !outcomeRequests.some(req => req.type === 'watchlist' && req.target.id === company.id) &&
-          <Button type="primary" onClick={sendWatchlistRequest}>Add to watchlist</Button>
+          {!isOwnCompanyPage &&
+          <>
+            {/* TODO God */}
+            {ownCompany.watchlist && !ownCompany.watchlist.some(id => id === company.id) && !outcomeRequests.some(req => req.type === 'watchlist' && req.target.id === company.id) &&
+            <Button type="primary" onClick={sendWatchlistRequest}>Add to watchlist</Button>
+            }
+            {/* TODO holy shit */}
+            {!ownCompany.fundraising[0].swaps.some(req => req.target === company.id || req.sender === company.id) &&
+            <Button type="primary" onClick={sendSwapRequest}>Send swap request</Button>
+            }
+          </>
           }
-          {/* TODO holy shit */}
-          {!ownCompany.fundraising[0].swaps.some(req => req.target === company.id || req.sender === company.id) &&
-          <Button type="primary" onClick={sendSwapRequest}>Send swap request</Button>
-          }
+
         </div>
       </div>
 
