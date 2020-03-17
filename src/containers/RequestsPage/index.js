@@ -15,8 +15,6 @@ const RequestsPage = ({outcomeRequests, incomeRequests, dispatch, incomeSwaps, o
     dispatch({type: 'FETCH_SWAPS_REQUEST'})
   }, [])
 
-  console.log(incomeSwaps)
-
   const income = [...incomeRequests, ...incomeSwaps]
   const outcome = [...outcomeRequests, ...outcomeSwaps]
   const requests = [...income, ...outcome]

@@ -2,10 +2,15 @@ import axios from "axios";
 import {call, put, take, takeEvery} from "@redux-saga/core/effects";
 import history from "../../history";
 import {notification} from "antd";
+import {normalize} from "normalizr";
+import {company} from "../schema";
 
 function* fetchCompaniesRequest() {
   try {
     const res = yield axios.get('company/')
+
+    const normalizedData = normalize(res.data, [company])
+    console.log(normalizedData)
 
     yield put({type: 'FETCH_COMPANIES_SUCCESS', payload: res.data})
   } catch (e) {

@@ -2,12 +2,17 @@ import React, {useCallback, useEffect} from 'react'
 import styles from './CompanyPage.module.scss'
 import {connect} from "react-redux";
 import {Button, Table} from "antd";
-import {companiesListSelector, matchedCompanySelector, ownCompanySelector} from "../../ducks/companies/selectors";
+import {
+  companiesListSelector,
+  matchedCompanySelector,
+  ownCompanyActiveFundraisingSelector,
+  ownCompanySelector
+} from "../../ducks/companies/selectors";
 import {matchedOutcomeRequestsSelector} from "../../ducks/requests/selectors";
 import CompanyCard from "../../components/CompanyCard/CompanyCard";
 import * as _ from 'lodash'
 
-const CompanyPage = ({company, ownCompany, dispatch, outcomeRequests, match, companies}) => {
+const CompanyPage = ({company, ownCompany, dispatch, outcomeRequests, match, companies, activeFundraising}) => {
   useEffect(() => {
     dispatch({type: 'GET_WATCHLISTS_REQUEST'})
     dispatch({type: 'FETCH_COMPANY_REQUEST', payload: {companyId: match.params.companyId}})
@@ -61,8 +66,7 @@ const CompanyPage = ({company, ownCompany, dispatch, outcomeRequests, match, com
             {ownCompany.watchlist && !ownCompany.watchlist.some(id => id === company.id) && !outcomeRequests.some(req => req.type === 'watchlist' && req.target.id === company.id) &&
             <Button type="primary" onClick={sendWatchlistRequest}>Add to watchlist</Button>
             }
-            {/* TODO holy shit */}
-            {!ownCompany.fundraising[0].swaps.some(req => req.target === company.id || req.sender === company.id) &&
+            {activeFundraising && !activeFundraising.swaps.some(req => req.target === company.id || req.sender === company.id) &&
             <Button type="primary" onClick={sendSwapRequest}>Send swap request</Button>
             }
           </>
@@ -116,6 +120,7 @@ export default connect(
     ownCompany: ownCompanySelector(state),
     outcomeRequests: matchedOutcomeRequestsSelector(state, props),
     companies: companiesListSelector(state),
+    activeFundraising: ownCompanyActiveFundraisingSelector(state, props)
   }),
   null
 )(CompanyPage)

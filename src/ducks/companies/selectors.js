@@ -11,3 +11,14 @@ export const ownCompanySelector = createSelector(
   [currentUserSelector],
   user => user.company || {}
 )
+
+export const ownCompanyActiveFundraisingSelector = createSelector(
+  [ownCompanySelector],
+  company => company.fundraising.find(fund => {
+    const today = (new Date()).getTime()
+    const startDay = (new Date(fund.start_date)).getTime()
+    const endDay = (new Date(fund.end_date)).getTime()
+
+    return today > startDay && today < endDay
+  })
+)

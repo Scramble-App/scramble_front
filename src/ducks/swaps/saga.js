@@ -2,6 +2,8 @@ import axios from "axios"
 import {put, takeEvery, call} from "@redux-saga/core/effects";
 import {notification} from "antd";
 import {fetchUser} from "../users/sagas";
+import {normalize} from "normalizr";
+import {swap} from "../schema";
 
 function* sendSwapRequest(action) {
   try {
@@ -17,6 +19,9 @@ function* sendSwapRequest(action) {
 function* fetchSwapsRequest() {
   try {
     const res = yield axios.get('/swaps/')
+
+    const normalizedData = normalize(res.data, [swap])
+    console.log(normalizedData)
     yield put({type: 'FETCH_SWAPS_SUCCESS', payload: res.data})
   } catch (e) {
     notification.error({message: 'Something went wrong. Please try again!'})

@@ -1,8 +1,10 @@
 import {createSelector} from "reselect";
-import {companiesListSelector, ownCompanySelector} from "../companies/selectors";
+import {companiesListSelector, ownCompanyActiveFundraisingSelector, ownCompanySelector} from "../companies/selectors";
 
 // TODO fix type hardcode
 export const swapsSelector = state => state.swaps.map(swap => ({...swap}))
+
+// TODO might need to change to ownSwaps only?
 export const outcomeSwapsSelector = createSelector(
   [swapsSelector, companiesListSelector, ownCompanySelector],
   (swaps, companies, ownCompany) => (
@@ -32,14 +34,17 @@ export const incomeSwapsSelector = createSelector(
 )
 
 export const companySwapsSelector = createSelector(
-  [ownCompanySelector, companiesListSelector],
-  (ownCompany, companies) => (
-    // TODO active fundraising! https://scrambleup.atlassian.net/browse/SCR-21
-    ownCompany.fundraising[0].swaps
-      .map(swap => ({
-        ...swap,
-        sender: companies.find(company => company.id === swap.sender) || {},
-        target: companies.find(company => company.id === swap.target) || {}
-      }))
-  )
+  [companiesListSelector, ownCompanyActiveFundraisingSelector],
+  (companies, activeFundraising) => {
+    if (!activeFundraising) return []
+
+    return (
+      activeFundraising.swaps
+        .map(swap => ({
+          ...swap,
+          sender: companies.find(company => company.id === swap.sender) || {},
+          target: companies.find(company => company.id === swap.target) || {}
+        }))
+    )
+  }
 )
