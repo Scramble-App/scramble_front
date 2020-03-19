@@ -9,6 +9,7 @@ export function* fetchUser () {
     const res = yield axios.get('auth/users/me/')
     yield put({type: 'FETCH_USER_SUCCESS', payload: res.data})
   } catch (e) {
+    Cookies.remove('token')
     yield put({type: 'FETCH_USER_FAILURE'})
   }
 }
