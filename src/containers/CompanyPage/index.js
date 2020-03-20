@@ -16,7 +16,8 @@ const CompanyPage = ({company, ownCompany, dispatch, outcomeRequests, match, com
   useEffect(() => {
     dispatch({type: 'GET_WATCHLISTS_REQUEST'})
     dispatch({type: 'FETCH_COMPANY_REQUEST', payload: {companyId: match.params.companyId}})
-  }, []);
+  }, [])
+
   const sendWatchlistRequest = useCallback(() => {
     dispatch({
       type: 'SEND_WATCHLIST_REQUEST_REQUEST',
@@ -42,6 +43,37 @@ const CompanyPage = ({company, ownCompany, dispatch, outcomeRequests, match, com
     .slice(0, 2)
 
   const isOwnCompanyPage = company.id === ownCompany.id
+  const watchlist = ownCompany.watchlist || []
+  const isCompanyInWatchList = watchlist.some(id => id === company.id)
+  const outcomeWatchlistRequest = outcomeRequests.find(req => req.type === 'watchlist' && req.target.id === company.id)
+  const existingSwap = activeFundraising.swaps.find(req => req.target === company.id || req.sender === company.id)
+
+  // TODO reuse with Requests page
+  const approve = useCallback(({id, type, sender, target}) => {
+    const action = type === 'swap' ? 'UPDATE_SWAP_REQUEST' : 'UPDATE_WATCHLIST_REQUEST'
+    dispatch({
+      type: action,
+      payload: {
+        id,
+        sender: sender.id,
+        target: target.id,
+        status: 'accepted'
+      }
+    })
+  }, [])
+
+  const reject = useCallback(({id, type, sender, target}) => {
+    const action = type === 'swap' ? 'UPDATE_SWAP_REQUEST' : 'UPDATE_WATCHLIST_REQUEST'
+    dispatch({
+      type: action,
+      payload: {
+        id,
+        sender: sender.id,
+        target: target.id,
+        status: 'declined'
+      }
+    })
+  }, [])
 
   return (
     <div className={`${styles.wrapper} ${styles.companyPage}`}>
@@ -61,15 +93,26 @@ const CompanyPage = ({company, ownCompany, dispatch, outcomeRequests, match, com
             />
           </div>
           {!isOwnCompanyPage &&
-          <>
-            {/* TODO God */}
-            {ownCompany.watchlist && !ownCompany.watchlist.some(id => id === company.id) && !outcomeRequests.some(req => req.type === 'watchlist' && req.target.id === company.id) &&
-            <Button type="primary" onClick={sendWatchlistRequest}>Add to watchlist</Button>
-            }
-            {activeFundraising && !activeFundraising.swaps.some(req => req.target === company.id || req.sender === company.id) &&
-            <Button type="primary" onClick={sendSwapRequest}>Send swap request</Button>
-            }
-          </>
+          <div className={styles.actions}>
+            {!isCompanyInWatchList && !outcomeWatchlistRequest &&
+            <Button type="primary" onClick={sendWatchlistRequest}>Add to watchlist</Button>}
+
+            {outcomeWatchlistRequest && <p>Watchlist request: {outcomeWatchlistRequest.status}</p>}
+
+            {activeFundraising && !existingSwap &&
+            <Button type="primary" onClick={sendSwapRequest}>Send swap request</Button>}
+
+            {existingSwap &&
+            <div>
+              <p style={{marginBottom: 10}}>Swap request: {existingSwap.status}</p>
+              {existingSwap.target === ownCompany.id && existingSwap.status === 'pending' &&
+              <>
+                <Button onClick={() => reject(existingSwap)} className={styles.rejectButton}>Reject</Button>
+                &nbsp;<Button onClick={() => approve(existingSwap)} type={"primary"}>Accept</Button>
+              </>
+              }
+            </div>}
+          </div>
           }
 
         </div>

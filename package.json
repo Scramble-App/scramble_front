@@ -16,7 +16,7 @@
     "react-ga": "^2.7.0",
     "react-redux": "7.1.1",
     "react-router-dom": "5.1.1",
-    "react-scripts": "3.1.2",
+    "react-scripts": "3.4.0",
     "redux": "4.0.4",
     "redux-auth-wrapper": "2.1.0",
     "redux-saga": "1.1.1",
@@ -26,14 +26,11 @@
     "node-sass": "4.12.0"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "EXTEND_ESLINT=true && react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "deploy": "yarn build && mv build/index.html build/200.html && surge build"
-  },
-  "eslintConfig": {
-    "extends": "react-app"
   },
   "browserslist": {
     "production": [
@@ -47,5 +44,14 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "http://127.0.0.1:8000"
+  "proxy": "http://127.0.0.1:8000",
+  "eslintConfig": {
+    "extends": [
+      "react-app"
+    ],
+
+    "rules": {
+      "semi": 0
+    }
+  }
 }

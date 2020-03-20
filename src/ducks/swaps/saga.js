@@ -33,7 +33,7 @@ function* updateSwapRequest({payload}) {
     const res = yield axios.patch(`/swaps/${payload.id}/`, payload)
     yield put({type: 'UPDATE_SWAP_SUCCESS', payload: res.data})
     notification.success({message: `You've successfully ${payload.status === 'accepted' ? 'accepted' : 'declined'} swap request!`})
-    // refetch own swaps
+    // refresh own swaps
     yield call(fetchUser)
   } catch (e) {
     notification.error({message: 'Something went wrong. Please try again!'})

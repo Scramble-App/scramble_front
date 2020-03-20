@@ -14,6 +14,7 @@ const MyCompany = ({company, dispatch, updates, onMyCompanyFormSubmit, user}) =>
     dispatch({type: 'FETCH_COMPANIES_REQUEST'})
     dispatch({type: 'FETCH_UPDATES_REQUEST'})
   }, [])
+
   return (
     <div className={`${styles.wrapper} ${styles.accountWrapper}`}>
       <div>
@@ -22,6 +23,7 @@ const MyCompany = ({company, dispatch, updates, onMyCompanyFormSubmit, user}) =>
         <p className={styles.field}>Full name: {user.first_name} {user.last_name}</p>
         <Button type="primary" onClick={() => dispatch({type: 'LOGOUT_REQUEST'})}>Log out</Button>
       </div>
+
       <div>
         <h2 className={styles.pageTitle}>Company info</h2>
         <CompanyCard company={company}/>
