@@ -126,6 +126,7 @@ const FundraisingPage = ({dispatch, user, swaps, activeFundraising}) => {
                           <td>{(new Date(swap.created_at)).toDateString()}</td>
                           <td>{partner.name}</td>
                           <td>{partner.founder}</td>
+                          <td>${swap.amount}</td>
                         </tr>
                       )
                     })
