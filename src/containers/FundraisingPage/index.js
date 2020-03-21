@@ -16,8 +16,8 @@ const FundraisingPage = ({dispatch, user, swaps, activeFundraising}) => {
 
   const incomeSwaps = swaps.filter(swap => swap.status === 'pending' && swap.target.id === user.company.id)
   const outcomeSwaps = swaps.filter(swap => swap.status === 'pending' && swap.sender.id === user.company.id)
-  const acceptedSwaps = swaps.filter(swap => swap.status === 'accepted')
-  const confirmedSwaps = swaps.filter(swap => swap.status === 'taken')
+  const acceptedSwaps = swaps.filter(swap => swap.status === 'accepted' && (!swap.amount || swap.amount === 0))
+  const confirmedSwaps = swaps.filter(swap => swap.amount && swap.amount > 0)
   const rejectedSwaps = swaps.filter(swap => swap.status === 'declined')
 
 
@@ -131,6 +131,9 @@ const FundraisingPage = ({dispatch, user, swaps, activeFundraising}) => {
                       )
                     })
                     }
+                    <tr>
+                      <td colSpan={4} style={{fontSize: 10, paddingTop: 10}}><pre>Swap amount can be increased till the end of the current fundraising period</pre></td>
+                    </tr>
                   </table>
                   :
                   <p>No confirmed swap requests yet.</p>
