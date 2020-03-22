@@ -12,7 +12,7 @@ import {matchedOutcomeRequestsSelector} from "../../ducks/requests/selectors";
 import CompanyCard from "../../components/CompanyCard/CompanyCard";
 import * as _ from 'lodash'
 
-const CompanyPage = ({company, ownCompany, dispatch, outcomeRequests, match, companies, activeFundraising}) => {
+const CompanyPage = ({company, ownCompany, dispatch, outcomeRequests, match, companies, activeFundraising = {}}) => {
   useEffect(() => {
     dispatch({type: 'GET_WATCHLISTS_REQUEST'})
     dispatch({type: 'FETCH_COMPANY_REQUEST', payload: {companyId: match.params.companyId}})
@@ -46,7 +46,7 @@ const CompanyPage = ({company, ownCompany, dispatch, outcomeRequests, match, com
   const watchlist = ownCompany.watchlist || []
   const isCompanyInWatchList = watchlist.some(id => id === company.id)
   const outcomeWatchlistRequest = outcomeRequests.find(req => req.type === 'watchlist' && req.target.id === company.id)
-  const existingSwap = activeFundraising.swaps.find(req => req.target === company.id || req.sender === company.id)
+  const existingSwap = (activeFundraising.swaps || []).find(req => req.target === company.id || req.sender === company.id)
 
   // TODO reuse with Requests page
   const approve = useCallback(({id, type, sender, target}) => {
@@ -99,22 +99,45 @@ const CompanyPage = ({company, ownCompany, dispatch, outcomeRequests, match, com
 
             {outcomeWatchlistRequest && <p>Watchlist request: {outcomeWatchlistRequest.status}</p>}
 
-            {activeFundraising && !existingSwap &&
-            <Button type="primary" onClick={sendSwapRequest}>Send swap request</Button>}
-
-            {existingSwap &&
-            <div>
-              <p style={{marginBottom: 10}}>Swap request: {existingSwap.status}</p>
-              {existingSwap.target === ownCompany.id && existingSwap.status === 'pending' &&
+            {!ownCompany.is_available_to_trade || !ownCompany.has_active_fundraising ?
               <>
-                <Button onClick={() => reject(existingSwap)} className={styles.rejectButton}>Reject</Button>
-                &nbsp;<Button onClick={() => approve(existingSwap)} type={"primary"}>Accept</Button>
+                {!ownCompany.has_active_fundraising ?
+                  <div>You have no active fundraising period at the moment</div>
+                  :
+                  <div>You have already reached your fundraising limit</div>
+                }
               </>
-              }
-            </div>}
+              :
+              <>
+                {!company.is_available_to_trade || !company.has_active_fundraising ?
+                  <>
+                    {!company.has_active_fundraising ?
+                      <div>{company.name} is not available to trade at the moment</div>
+                      :
+                      <div>{company.name} has reached its fundraising limit</div>
+                    }
+                  </>
+                  :
+                  <>
+                    {activeFundraising && !existingSwap &&
+                    <Button type="primary" onClick={sendSwapRequest}>Send swap request</Button>}
+
+                    {existingSwap &&
+                    <div>
+                      <p style={{marginBottom: 10}}>Swap request: {existingSwap.status}</p>
+                      {existingSwap.target === ownCompany.id && existingSwap.status === 'pending' &&
+                      <>
+                        <Button onClick={() => reject(existingSwap)} className={styles.rejectButton}>Reject</Button>
+                        &nbsp;<Button onClick={() => approve(existingSwap)} type={"primary"}>Accept</Button>
+                      </>
+                      }
+                    </div>}
+                  </>
+                }
+              </>
+            }
           </div>
           }
-
         </div>
       </div>
 
