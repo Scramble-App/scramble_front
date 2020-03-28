@@ -17,7 +17,9 @@ const RequestsPage = ({outcomeRequests, incomeRequests, dispatch, incomeSwaps, o
 
   const income = [...incomeRequests, ...incomeSwaps]
   const outcome = [...outcomeRequests, ...outcomeSwaps]
-  const requests = [...income, ...outcome]
+  let requests = [...income, ...outcome]
+  requests = _.orderBy(requests, 'created_at', ['desc'])
+  requests = _.sortBy(requests, item => item.status === 'pending' ? 0 : 1)
 
   const approve = useCallback(({id, type, sender, target}) => {
     const action = type === 'swap' ? 'UPDATE_SWAP_REQUEST' : 'UPDATE_WATCHLIST_REQUEST'
