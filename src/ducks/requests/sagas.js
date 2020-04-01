@@ -23,8 +23,12 @@ function* updateWatchlistStatus ({payload}) {
 }
 
 function* fetchWatchlistRequests() {
+  try {
   const res = yield axios.get('request/')
   yield put({type: 'GET_WATCHLIST_SUCCESS', payload: res.data})
+  } catch (e) {
+    notification.error({message: 'Something went wrong. Please try again!'})
+  }
 }
 
 export function* watchSendWatchlistRequest() {

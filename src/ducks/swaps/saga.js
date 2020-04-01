@@ -4,15 +4,21 @@ import {notification} from "antd";
 import {fetchUser} from "../users/sagas";
 import {normalize} from "normalizr";
 import {swap} from "../schema";
+import * as _ from 'lodash'
 
 function* sendSwapRequest(action) {
   try {
-    const res = yield axios.post('/swaps/', action.payload)
+    yield axios.post('/swaps/', action.payload)
     yield put({type: 'ADD_SWAP_SUCCESS'})
     yield put({type: 'FETCH_USER_REQUEST'})
     notification.success({message: 'Your swap request has been sent!'})
   } catch (e) {
-    notification.error({message: 'Something went wrong. Please try again!'})
+    const error = _.get(e, 'response.data[0]')
+    if (error) {
+      notification.error({message: error})
+    } else {
+      notification.error({message: 'Something went wrong. Please try again!'})
+    }
   }
 }
 
