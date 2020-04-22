@@ -60,7 +60,7 @@ const FundraisingPage = ({dispatch, user, swaps, activeFundraising}) => {
                 <Progress type='circle'
                           format={() => <div className={styles.progressBarText}>
                             <span>Raised</span>
-                            ${activeFundraising.raised}
+                            ${Math.round(activeFundraising.raised)}
                             <br/><span>of ${activeFundraising.initial_raise_limit}</span></div>}
                           percent={activeFundraising.initial_raise_limit / 100 * activeFundraising.raised}
                           width={200}
@@ -126,7 +126,7 @@ const FundraisingPage = ({dispatch, user, swaps, activeFundraising}) => {
                           <td>{(new Date(swap.created_at)).toDateString()}</td>
                           <td>{partner.name}</td>
                           <td>{partner.founder}</td>
-                          <td>${swap.amount}</td>
+                          <td>${parseFloat(swap.amount).toFixed(1)}</td>
                         </tr>
                       )
                     })
