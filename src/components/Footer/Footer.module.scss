@@ -1,8 +1,138 @@
 @import "../../global.module";
 
+@font-face {
+  font-family: "scramble";
+  src: url("./../../fonts/scramble.eot?v2");
+  src: local("☺"), url("./../../fonts/scramble.woff2?v2") format("woff2"), url("./../../fonts/scramble.woff?v2") format("woff"), url("./../../fonts/scramble.ttf?v2") format("truetype"), url("./../../fonts/scramble.otf?v2") format("opentype"), url("./../../fonts/scramble.svg?v2#scramble") format("svg");
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+@font-face {
+  font-family: 'GT-Walsheim-Pro';
+  src: url("./../../fonts/GT-Walsheim-Pro-Medium.eot");
+  src: local("☺"), url("./../../fonts/GT-Walsheim-Pro-Medium.woff") format("woff"), url("./../../fonts/GT-Walsheim-Pro-Medium.ttf") format("truetype"), url("./../../fonts/GT-Walsheim-Pro-Medium.svg") format("svg");
+  font-weight: 600;
+  font-style: normal;
+}
+
+
+.scramble { /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: "scramble" !important;
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none; /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.scrambleLogo::before {
+  content: "" !important;
+}
+
+.scrambleFacebook::before {
+  content: "" !important;
+  color: #fff;
+}
+
+.scrambleLinkedin::before {
+  content: "" !important;
+  color: #fff;
+}
+
 .footer {
-  background: #000;
+  font-family: 'GT-Walsheim-Pro', sans-serif;
+  padding: 2em 2rem 2em 5rem;
+  background-color: black;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex !important;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  font-size: 1rem;
+  font-weight: 600;
   color: white;
-  padding: 20px 0;
+
+  a {
+    text-decoration: none;
+    text-transform: uppercase;
+    white-space: nowrap;
+    color: white;
+  }
+
+  .copyright {
+    color: #4d4d4d;
+    padding-right: 1rem;
+    margin-right: auto;
+  }
+
+  .logo {
+    width: 8rem;
+    margin-right: 3rem;
+  }
+
+  .social {
+    padding-right: 1rem;
+  }
+
+  .social li {
+    display: inline-block;
+    list-style: none;
+    text-transform: uppercase;
+    margin: .5rem;
+    font-size: 2em;
+  }
+
+  .address {
+    color: #4d4d4d;
+    padding-right: 1rem;
+    margin-right: auto;
+  }
+}
+
+@media (max-width: 479.8px) {
+  .footer {
+    font-size: 3em;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -webkit-box-align: start;
+    -ms-flex-align: start;
+    align-items: flex-start;
+
+    .social {
+      position: absolute;
+      right: 0;
+    }
+
+    .logo {
+      margin-bottom: 3em;
+      -webkit-box-ordinal-group: 2;
+      -ms-flex-order: 1;
+      order: 1;
+    }
+
+    .address {
+      margin-bottom: .5em;
+      -webkit-box-ordinal-group: 3;
+      -ms-flex-order: 2;
+      order: 2;
+    }
+
+    .copyright {
+      margin-bottom: .5em;
+      -webkit-box-ordinal-group: 4;
+      -ms-flex-order: 3;
+      order: 3;
+    }
+  }
 }
 
