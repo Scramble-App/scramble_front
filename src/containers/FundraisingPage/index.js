@@ -3,6 +3,7 @@ import styles from './FundraisingPage.module.scss'
 import {Link} from "react-router-dom";
 import {Progress} from "antd";
 import {connect} from "react-redux";
+import * as _ from 'lodash';
 import {currentUserSelector} from "../../ducks/users/selectors";
 import {companySwapsSelector} from "../../ducks/swaps/selectors";
 import CompanyCard from "../../components/CompanyCard/CompanyCard";
@@ -61,7 +62,7 @@ const FundraisingPage = ({dispatch, user, swaps, activeFundraising}) => {
                           format={() => <div className={styles.progressBarText}>
                             <span>Raised</span>
                             ${Math.round(activeFundraising.raised)}
-                            <br/><span>of ${activeFundraising.initial_raise_limit}</span></div>}
+                            <br/><span>of ${Math.round(activeFundraising.initial_raise_limit)}</span></div>}
                           percent={activeFundraising.initial_raise_limit / 100 * activeFundraising.raised}
                           width={200}
                 />
@@ -126,7 +127,7 @@ const FundraisingPage = ({dispatch, user, swaps, activeFundraising}) => {
                           <td>{(new Date(swap.created_at)).toDateString()}</td>
                           <td>{partner.name}</td>
                           <td>{partner.founder}</td>
-                          <td>${parseFloat(swap.amount).toFixed(1)}</td>
+                          <td>${_.round(swap.amount, 1)}</td>
                         </tr>
                       )
                     })
